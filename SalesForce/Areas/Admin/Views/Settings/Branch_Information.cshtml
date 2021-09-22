@@ -1,0 +1,336 @@
+﻿
+@{
+    ViewBag.Title = "Branch Information";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model SalesForce.Domain.Model.Inventory.VatBranchInformationEntity
+
+
+<form id="InputForm" action="">
+    <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-1 uk-container-center" id="tb_Container">
+        </div>
+    </div>
+
+    <div class="md-fab-wrapper">
+        <span class="md-fab md-fab-accent" id="note_add" onclick="OpenPopupModel(0);"><i class="material-icons">add</i> </span>
+    </div>
+    <div class="uk-modal" id="myModal">
+        <div class="uk-modal-dialog uk-modal-body uk-modal-dialog-medium" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            @Html.HiddenFor(m => m.Id)
+            <div class="uk-modal-header">
+                <h3 class="uk-modal-title" id="modalTitle"></h3>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Opening Date<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Openingdate, new { @class = "md-input label-fixed", @data_uk_datepicker = "{format:'DD/MM/YYYY'}", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Branch Name<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Branchname, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Owner Name<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Ownername, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Manager Name<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Managername, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Address<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Address, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Location<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Location, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Is Vat Applicable (?)<span class="uk-text-danger"> *</span></label>
+                    @*@Html.TextBoxFor(m => m.IsVatApplicable, new { @class = "md-input label-fixed" })*@
+                    @Html.DropDownListFor(m => m.IsVatApplicable, (List<SelectListItem>)ViewData["IsApplicableList"], new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Vat (%)<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.VatPercent, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Is Sales Center (?)<span class="uk-text-danger"> *</span></label>
+                    @*@Html.TextBoxFor(m => m.IsSalescenter, new { @class = "md-input label-fixed" })*@
+                    @Html.DropDownListFor(m => m.IsSalescenter, (List<SelectListItem>)ViewData["IsApplicableList"], new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Is Factory (?)<span class="uk-text-danger"> *</span></label>
+                    @*@Html.TextBoxFor(m => m.IsFactory, new { @class = "md-input label-fixed" })*@
+                    @Html.DropDownListFor(m => m.IsFactory, (List<SelectListItem>)ViewData["IsApplicableList"], new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Is CDC (?)<span class="uk-text-danger"> *</span></label>
+                    @*@Html.TextBoxFor(m => m.IsCdc, new { @class = "md-input label-fixed" })*@
+                    @Html.DropDownListFor(m => m.IsCdc, (List<SelectListItem>)ViewData["IsApplicableList"], new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Contact No<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Contactno, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Contact Person<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Contactperson, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Mobile No<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Mobileno, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Fax No<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Faxno, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Email No<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Emailno, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>NID No<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Nidno, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>TIN No<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Tinno, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>BIN/VAT No<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.BinVatNo, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>
+                        District Name <span class="uk-text-danger">*</span>
+                    </label>
+                    @Html.DropDownListFor(m => m.DistrictId, (List<SelectListItem>)ViewData["DistrictList"], new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>
+                        Thana Name <span class="uk-text-danger">*</span>
+                    </label>
+                    @Html.DropDownListFor(m => m.ThanaId, (List<SelectListItem>)ViewData["ThanaList"], new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>House No<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Houseno, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Road No<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Roadno, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Post Office Name<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Postoffice, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Post Office Code<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Postcode, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Website<span class="uk-text-danger"></span></label>
+                    @Html.TextBoxFor(m => m.Website, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Remarks<span class="uk-text-danger"></span></label>
+                    @Html.TextBoxFor(m => m.Remarks, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>IsActive<span class="uk-text-danger"> *</span></label>
+                    @Html.DropDownListFor(m => m.Isactive, (List<SelectListItem>)ViewData["IsActiveList"], new { @class = "md-input md-input-success label-fixed" })
+                </div>
+            </div>
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" class="md-btn md-btn-mini md-btn-success" id="submitBtn" onclick="SubmitData();">Create</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+<!--  forms advanced functions -->
+<script type="text/javascript" src="@Url.Content(" ~/Altair/assets/js/pages/forms_advanced.min.js")"></script>
+<!-- datatables -->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+<!-- datatables buttons-->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/dataTables.buttons.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/buttons.uikit.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/jszip/dist/jszip.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/pdfmake.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/vfs_fonts.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.colVis.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.html5.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.print.js")"></script>
+<!-- datatables custom integration -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/datatables.uikit.js")"></script>
+<!--  datatables functions -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/pages/plugins_datatables.js")"></script>
+
+<script type="text/javascript">
+
+    function OpenPopupModel(elem) {
+        if (elem === 0) {
+            $("#Branchname").val("");
+            $("#Ownername").val("");
+            $("#Managername").val("");
+            $("#Address").val("");
+            $("#Location").val("");
+            $("#IsVatApplicable").val("");
+            $("#VatPercent").val("");
+            $("#IsSalescenter").val("");
+            $("#IsFactory").val("");
+            $("#IsCdc").val("");
+            $("#Contactno").val("");
+            $("#Contactperson").val("");
+            $("#Mobileno").val("");
+            $("#Faxno").val("");
+            $("#Emailno").val("");
+            $("#Nidno").val("");
+            $("#Tinno").val("");
+            $("#BinVatNo").val("");
+            $("#DistrictId").val("");
+            $("#ThanaId").val("");
+            $("#Houseno").val("");
+            $("#Roadno").val("");
+            $("#Postoffice").val("");
+            $("#Postcode").val("");
+            $("#Website").val("");
+            $("#Remarks").val("");
+            $("#Isactive").val("");
+
+            $("#Id").val("0");
+            $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-success").text("Create");
+            $("#modalTitle").text("Create Branch Information");
+        }
+        else {
+            $.post("/Admin/Settings/GetSingleVatBranchInformationRecordById?Id=" + elem, function (data) {
+
+                //$("#BusinessUnitName").val(data.BusinessUnitName);
+                $("#Branchname").val(data.Branchname);
+                $("#Ownername").val(data.Ownername);
+                $("#Managername").val(data.Managername);
+                $("#Address").val(data.Address);
+                $("#Location").val(data.Location);
+                $("#IsVatApplicable").val(data.IsVatApplicable);
+                $("#VatPercent").val(data.VatPercent);
+                $("#IsSalescenter").val(data.IsSalescenter);
+                $("#IsFactory").val(data.IsFactory);
+                $("#IsCdc").val(data.IsCdc);
+                $("#Contactno").val(data.Contactno);
+                $("#Contactperson").val(data.Contactperson);
+                $("#Mobileno").val(data.Mobileno);
+                $("#Faxno").val(data.Faxno);
+                $("#Emailno").val(data.Emailno);
+                $("#Nidno").val(data.Nidno);
+                $("#Tinno").val(data.Tinno);
+                $("#BinVatNo").val(data.BinVatNo);
+                $("#DistrictId").val(data.DistrictId);
+                $("#ThanaId").val(data.ThanaId);
+                $("#Houseno").val(data.Houseno);
+                $("#Roadno").val(data.Roadno);
+                $("#Postoffice").val(data.Postoffice);
+                $("#Postcode").val(data.Postcode);
+                $("#Website").val(data.Website);
+                $("#Remarks").val(data.Remarks);
+                $("#Isactive").val(data.Isactive);
+
+                $("#Id").val(data.Id);
+                $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-danger").text("Update");
+                $("#modalTitle").text("Update Branch Information");
+            });
+        }
+        //UIkit.modal("#myModal").show();
+        UIkit.modal("#myModal", { bgclose: false, keyboard: false }).show();
+    }
+
+
+    GetSearchResult();
+
+    function GetSearchResult() {
+        $.post("/Admin/Settings/GetAllVatBranchInformationRecord", function (data) {
+            $("#tb_Container").html(data);
+            altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 380);
+        });
+    }
+
+    function SubmitData() {
+        var errorMsg = '';
+        UIkit.modal.confirm('Are you sure to Submit this?', function () {
+            if (!$("#Branchname").val()) {
+                errorMsg = "Branch Name Required.";
+                UIkit.modal.alert(errorMsg);
+            }
+            else {
+                $.post("/Admin/Settings/Save_Update_VatBranchInformationInfo", $("#InputForm").serialize(), function (data) {
+                    if (data.Success) {
+                        UIkit.modal.alert(data.Msg);
+                        UIkit.modal("#myModal").hide();
+                        GetSearchResult();
+                    }
+                    else {
+                        UIkit.modal.alert(data.Msg);
+                    }
+                });
+            }
+        });
+    }
+</script>
+

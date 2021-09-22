@@ -1,0 +1,455 @@
+﻿
+@{
+    ViewBag.Title = "NewUser";
+}
+
+<h2>NewUser</h2>
+
+<script src="~/Scripts/jquery-1.7.2.min.js"></script>
+
+<div class="content-wrapper">
+    <section class="content-header"></section>
+    <section class="content">
+        <div class="box">
+            <div id="SaveForm" class="box-body" style="padding:10px 60px 10px 30px;  background: #f4f6f9;">
+                @*Student Basic Information*@
+                <div class="row">
+                    <p class="k-grid-header groupHeader">Student Basic Information</p>
+                    <input type="hidden" class="form-control txt" id="hdStudentID">
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="txtFullName">Student's Full Name <span class="lblReq">*</span> </label>
+                            <input type="text" class="form-control txtOnly" id="txtFullName" placeholder="Full Name">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="ddlProgram">Program: <span class="lblReq">*</span> </label>
+                            <select class="form-control ddlMaster" id="ddlProgram"></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <label class="formlbl" for="imageUploadForm">Select Photo</label>
+                        <input type="file" class="form-control image" id="imageUploadForm" name="image" multiple="multiple" />
+                        <p style="color:black;font-size:11px;"> Photo Must be in Passport(PP) Size. Max Upload Size 256 KB. Upload Only JPG/PNG/JPEG Extension File.</p>
+                    </div>
+                </div>
+
+                @*Student Personal Information*@
+                <div class="row">
+                    <p class="k-grid-header groupHeader">Student Personal Information</p>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="txtFatherName">Father's Name <span class="lblReq">*</span> </label>
+                            <input type="text" class="form-control txtOnly" id="txtFatherName">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="txtMotherName">Mother's Name <span class="lblReq">*</span> </label>
+                            <input type="text" class="form-control txtOnly" id="txtMotherName">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="txtGuardian">Guardian/Referrer Name</label>
+                            <input type="text" class="form-control txtOnly" id="txtGuardian">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="txtSdtContactNo">Student's Contact No.<span class="lblReq">*</span> </label>
+                                <input type="text" class="form-control number" id="txtSdtContactNo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="txtParentsContactNo"> Parent's/Guardian's Contact No.<span class="lblReq">*</span> </label>
+                            <input type="text" class="form-control number" id="txtParentsContactNo">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="txtNID">Student's National ID/Birth Certificate No.</label>
+                            <input type="text" class="form-control number" id="txtNID">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="txtEmail">Student's E-mail</label>
+                            <input type="text" class="form-control txt" id="txtEmail">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-8 col-lg-8">
+                        <div class="form-group">
+                            <label for="txtPresentAddress">Present Address <span class="lblReq">*</span> </label>
+                            <input type="text" class="form-control txt" id="txtPresentAddress">
+                        </div>
+                    </div>
+                </div>
+
+                @*Student Academic Information*@
+                <div class="row">
+                    <p class="k-grid-header groupHeader">Student Academic Information</p>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="ddlExam1">SSC/Dakhil/Equivalent <span class="lblReq">*</span> </label>
+                            <select class="form-control ddlMaster" id="ddlExam1"></select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label for="txtExam1Roll">Roll Number <span class="lblReq">*</span> </label>
+                            <input type="text" class="form-control number" id="txtExam1Roll">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label for="txtExam1Registration">Registration Number <span class="lblReq">*</span> </label>
+                            <input type="text" class="form-control number" id="txtExam1Registration">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label for="ddlExam1PasingYear">Pasing Year <span class="lblReq">*</span> </label>
+                            <select class="form-control ddlMaster" id="ddlExam1PasingYear"></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label for="ddlExam1Board">Board <span class="lblReq">*</span> </label>
+                            <select class="form-control ddlMaster" id="ddlExam1Board"></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="txtExam1GPA">GPA <span class="lblReq">*</span> </label>
+                                <input type="number" class="form-control txt" id="txtExam1GPA" placeholder="Example input">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <div class="form-group">
+                            <label for="ddlExam2">HSC/Diploma/Equivalen <span class="lblReq">*</span> </label>
+                            <select class="form-control ddlMaster" id="ddlExam2"></select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label for="txtExam2Roll">Roll Number <span class="lblReq">*</span> </label>
+                            <input type="text" class="form-control number" id="txtExam2Roll">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label for="txtExam2Registration">Registration Number <span class="lblReq">*</span> </label>
+                            <input type="text" class="form-control number" id="txtExam2Registration">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label for="ddlExam2PasingYear">Pasing Year <span class="lblReq">*</span> </label>
+                            <select class="form-control ddlMaster" id="ddlExam2PasingYear"></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <div class="form-group">
+                            <label for="ddlExam2Board">Board <span class="lblReq">*</span> </label>
+                            <select class="form-control ddlMaster" id="ddlExam2Board"></select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="txtExam2GPA">GPA <span class="lblReq">*</span> </label>
+                                <input type="number" class="form-control txt" id="txtExam2GPA" placeholder="Example input">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer" style="padding: 10px 60px 10px 30px; background: #f4f6f9;">
+                <button id="btnSave" type="button" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style type="text/css">
+        label {
+            display: inline-block;
+            margin-bottom: 0;
+            font-size: smaller;
+        }
+
+        input, select, textarea {
+            max-width: 100%;
+        }
+
+        .groupHeader {
+            padding: 10px 10px 10px 30px;
+        }
+
+        .lblReq {
+            color: red;
+        }
+
+        /*.form-group {
+            margin-bottom: .4rem;
+        }
+
+        .box-body {
+            background: #f4f6f9;
+        }
+
+        .box-footer {
+            padding: 0.55rem 0.55rem 0.55rem 1.25rem;
+            background: #f4f6f9;
+        }
+
+        .box-header {
+            padding: 0 1rem;
+        }
+
+        .btn {
+            padding: 0.4rem 1.40rem;
+        }
+
+
+        .box-body ul li {
+            line-height: 12px;
+        }*/
+
+        .divEntry .form-control,
+        .container,
+        .container-fluid,
+        .row,
+        .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1,
+        .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2,
+        .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3,
+        .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4,
+        .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5,
+        .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6,
+        .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7,
+        .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8,
+        .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9,
+        .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10,
+        .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11,
+        .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        /*.divEntry {
+            background: rgb(244, 246, 249);
+            padding: 0px 0px 8px 10px;
+            overflow: hidden;
+        }
+
+
+        .btn-light {
+            border-radius: 0px;
+            border-color: #D2D6DE;
+            padding: 7px 15px;
+        }
+    */
+
+</style>
+
+
+<script>
+    $(function () {
+        ClearForm();
+        $(document).delegate('#btnSave', 'click', function (e) {
+            e.preventDefault();
+
+            SaveStudentFormValue();
+        });
+
+        $(document).ready(function () {
+            $(".number").bind("keypress", function (e) {
+                var keyCode = e.which ? e.which : e.keyCode
+
+                if (!(keyCode >= 48 && keyCode <= 57)) {
+                    e.preventDefault();
+                    alert('Should be Number');
+                } else {
+                    $(".error").css("display", "none");
+                }
+            });
+        });
+        $(document).ready(function () {
+            $(".txtOnly").keypress(function (e) {
+                var key = e.keyCode;
+                if (key >= 48 && key <= 57) {
+                    e.preventDefault();
+                    alert(' Alphabet Needed Number Not Allowed');
+                }
+            });
+        });
+
+        LoadStudentInfoDDLMasterData();
+    });
+
+    function FormValidation() {
+        var _isError = 0;
+        var _errorMsg = "";
+
+        $("#modalStudentInfo").find('input:text, input:password, input:file, select, textarea')
+            .each(function () {
+                if ($(this).attr("data-required") == "1" && ($(this).val() == null || $(this).val() == "-1" || $(this).val() == "")) {
+                    _isError = 1;
+                    //_errorMsg += $(this).attr("placeholder") + "\n";
+                    $(this).addClass("customError");
+                }
+                else {
+                    $(this).removeClass("customError");
+                }
+            });
+
+
+        if (_isError == 1) {
+            if (_errorMsg != "") {
+                alert(_errorMsg);
+            }
+            $.notify("Data Save Failed..", "error");
+            return false;
+        }
+
+        else
+            SaveStudentFormValue();
+    }
+    function LoadStudentInfoDDLMasterData() {
+        $.ajax({
+            type: "GET",
+            url: "/StudentInfo/LoadStudentInfoDDLMasterData",
+            data: {},
+            contentType: "application/json",
+            datatype: "json",
+            success: function (data) {
+
+                DDLMasterData = data;
+                BindddlWithControlID(data.ddlProgramDBModel, "ddlProgram", "Select", "");
+                BindddlWithControlID(data.ExamDBModel, "ddlExam1", "Select", "");
+                BindddlWithControlID(data.PassingYearDBModel, "ddlExam1PasingYear", "Select", "");
+                BindddlWithControlID(data.BoardDBModel, "ddlExam1Board", "Select", "");
+                BindddlWithControlID(data.ExamDBModel, "ddlExam2", "Select", "");
+                BindddlWithControlID(data.PassingYearDBModel, "ddlExam2PasingYear", "Select", "");
+                BindddlWithControlID(data.BoardDBModel, "ddlExam2Board", "Select", "");
+
+            }
+        });
+    }
+    function SaveStudentFormValue() {
+
+        var _isError = 0;
+        var StudentID = $("#hdStudentID").val();
+        var Program = $("#ddlProgram").val();
+        var Exam1 = $("#ddlExam1").val();
+        var Exam1PasingYear = $("#ddlExam1PasingYear").val();
+        var Exam1Board = $("#ddlExam1Board").val();
+        var Exam1GPA = $("#txtExam1GPA").val();
+        var Exam2 = $("#ddlExam2").val();
+        var Exam2PasingYear = $("#ddlExam2PasingYear").val();
+        var Exam2Board = $("#ddlExam2Board").val();
+        var Exam2GPA = $("#txtExam2GPA").val();
+        var FullName = $("#txtFullName").val();
+        var FatherName = $("#txtFatherName").val();
+        var MotherName = $("#txtMotherName").val();
+        var Guardian = $("#txtGuardian").val();
+        var SdtContactNo = $("#txtSdtContactNo").val();
+        var ParentsContactNo = $("#txtParentsContactNo").val();
+        var NID = $("#txtNID").val();
+        var Email = $("#txtEmail").val();
+        var PresentAddress = $("#txtPresentAddress").val();
+        var Exam1Roll = $("#txtExam1Roll").val();
+        var Exam1Registration = $("#txtExam1Registration").val();
+        var Exam2Roll = $("#txtExam2Roll").val();
+        var Exam2Registration = $("#txtExam2Registration").val();
+
+
+        if (_isError == 1) {
+            return false;
+        }
+
+        var formData = new FormData();
+        var totalFiles = document.getElementById("imageUploadForm").files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = document.getElementById("imageUploadForm").files[i];
+            formData.append("imageUploadForm", file);
+        }
+        formData.append("StudentID", StudentID);
+        formData.append("Program", Program);
+        formData.append("FullName", FullName);
+        formData.append("FatherName", FatherName);
+        formData.append("MotherName", MotherName);
+        formData.append("Guardian", Guardian);
+        formData.append("SdtContactNo", SdtContactNo);
+        formData.append("ParentsContactNo", ParentsContactNo);
+        formData.append("NID", NID);
+        formData.append("Email", Email);
+        formData.append("PresentAddress", PresentAddress);
+        formData.append("Exam1", Exam1);
+        formData.append("Exam1PasingYear", Exam1PasingYear);
+        formData.append("Exam1Board", Exam1Board);
+        formData.append("Exam1GPA", Exam1GPA);
+        formData.append("Exam1Roll", Exam1Roll);
+        formData.append("Exam1Registration", Exam1Registration);
+        formData.append("Exam2", Exam2);
+        formData.append("Exam2PasingYear", Exam2PasingYear);
+        formData.append("Exam2Board", Exam2Board);
+        formData.append("Exam2GPA", Exam2GPA);
+        formData.append("Exam2Roll", Exam2Roll);
+        formData.append("Exam2Registration", Exam2Registration);
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Settings/EditPersonalInfo",
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                //alert(data.length);
+                if (data.success == true) {
+                    alert("Data Save Successfully..", "success");
+                }
+                else {
+                    alert("Data Save Failed..", "error");
+                }
+                //ClearForm();
+            }
+        });
+    }
+    function ClearForm() {
+        $("#hdValue").val("");
+        $(".number").val("");
+        $(".txtOnly").val("");
+        $(".txt").val("");
+        $(".image").val("");
+    }
+
+
+</script>
+
+
+
+
+

@@ -1,0 +1,116 @@
+﻿ul#Module {
+    padding: 0 0 2px;
+    position: relative;
+    margin: 0;
+    text-align: left;
+}
+
+ul#Module li {
+    display: inline;
+    list-style: none;
+    width:100px;
+}
+
+ul#Module li#greeting {
+    padding: 20px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    color: #fff;
+}
+
+ul#Module li a 
+{
+    float:left;
+    text-align:center;
+    padding: 10px 10px;
+    margin:5px;
+    font-weight: normal;
+    font-size:14px;
+    text-decoration: none;
+    line-height: 2.8em;
+    background-color:#b2beb5;
+    color:black;
+    width:160px;
+    display:block;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+}
+
+ul#Module li a:hover {
+    background-color:Silver;
+    text-decoration: none;
+}
+
+ul#Module li a:active {
+    background-color: #a6e2a6;
+    text-decoration: none;
+}
+
+ul#Module li.selected a {
+    background-color: #fff;
+    color: #000;
+}
+
+.logo
+{
+    float: left;
+    width:10%;
+    margin-top:1px;
+    margin-left:1px;
+}
+
+.ModuleTitle
+{
+    float: left;
+    width: 40%;
+    margin-top:10px;
+    margin-left:10px;
+}
+
+.current_user
+{
+    text-align: right;
+    float: right;
+    width: 45%;
+    margin-top:10px;
+    margin-right:10px;
+    vertical-align:bottom;
+}
+
+
+ul#QuickLink {
+    padding: 0 0 2px;
+    position: relative;
+    margin: 0;
+    text-align: left;
+}
+ul#QuickLink li {
+    display: inline;
+    list-style: none;
+    width:320px;
+}
+ul#QuickLink li a 
+{
+    float:left;
+    clear:both;
+    text-align:left;
+    padding: 5px 5px;
+    margin:2px;
+    font-weight: bold;
+    font-size:11px;
+    text-decoration: none;
+    line-height: 1.8em;
+    background-color:silver; 
+    color:blue;
+    width:300px;
+    display:block;
+    border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+}
+ul#QuickLink li a:hover {
+    background-color:Gray;
+    text-decoration: none;
+}

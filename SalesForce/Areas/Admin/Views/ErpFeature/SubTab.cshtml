@@ -1,0 +1,250 @@
+﻿
+@{
+    ViewBag.Title = "SubTab";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model  SalesForce.Domain.Admin.AdmSubfeatureEntity
+
+<form id="InputForm">
+    <div class="md-card md-card-content md-card-primary">
+        <div class="uk-grid" data-uk-grid-margin>
+
+            <div class="uk-width-medium-1-4">
+                <label>
+                    Module Name
+                </label>
+                @Html.DropDownList("SrcModuleId", (List<SelectListItem>)ViewData["ModuleList"], new { @class = "md-input label-fixed" })
+                @*@Html.DropDownListFor(m => m.ModuleName, (List<SelectListItem>)ViewData["ModuleList"], new { @class = "md-input label-fixed" })*@
+            </div>
+            <div class="uk-width-medium-1-4">
+                <label>
+                    Tab Name
+                </label>
+                @Html.DropDownList("SrcTabId", (List<SelectListItem>)ViewData["TabNameList"], new { @class = "md-input label-fixed" })
+                @*@Html.DropDownListFor(m => m.TabName, (List<SelectListItem>)ViewData["TabNameList"], new { @class = "md-input label-fixed" })*@
+            </div>
+        </div>
+
+    </div>
+    <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-1 uk-overflow-container" id="tb_Container">
+        </div>
+    </div>
+    <div class="md-fab-wrapper">
+        <span class="md-fab md-fab-accent" id="note_add" onclick="OpenPopupModel(0);"><i class="material-icons">add</i> </span>
+    </div>
+    <div class="uk-modal" id="myModal">
+        <div class="uk-modal-dialog uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            @Html.HiddenFor(m => m.Id)
+            <div class="uk-modal-header">
+                <h3 class="uk-modal-title" id="modalTitle"></h3>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Module Name<span class="uk-text-danger"> *</span></label>
+
+                    @Html.DropDownListFor(m => m.ModuleName, (List<SelectListItem>)ViewData["ModuleList"], new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Tab Name<span class="uk-text-danger"> *</span></label>
+                    @Html.DropDownListFor(m => m.Tabid, (List<SelectListItem>)ViewData["TabNameList"], new { @class = "md-input label-fixed" })
+
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Feature Name<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Subfeaturename, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Url<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Url, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Quick Link<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.QuickLink, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Serial/Order<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Sl, new { @class = "md-input label-fixed", @type = "number" })
+                </div>
+            </div>
+
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" class="md-btn md-btn-mini md-btn-success" id="submitBtn" onclick="SubmitData();">Create</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+<!--  forms advanced functions -->
+<script type="text/javascript" src="@Url.Content(" ~/Altair/assets/js/pages/forms_advanced.min.js")"></script>
+<!-- datatables -->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+<!-- datatables buttons-->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/dataTables.buttons.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/buttons.uikit.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/jszip/dist/jszip.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/pdfmake.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/vfs_fonts.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.colVis.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.html5.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.print.js")"></script>
+<!-- datatables custom integration -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/datatables.uikit.js")"></script>
+<!--  datatables functions -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/pages/plugins_datatables.js")"></script>
+<style type="text/css">
+    .ui-autocomplete {
+        overflow: auto;
+        height: 300px;
+    }
+
+    .material-icons {
+        cursor: pointer;
+    }
+
+    select.pList {
+        width: 300px;
+    }
+</style>
+
+
+<script type="text/javascript">
+    $('#SrcModuleId').change(function () {
+        getSubTabList();
+        $("#dataTable").html('');
+        var selectedItem = $(this).val();
+        getTabListForDropDown(selectedItem);
+    });
+
+    $('#ModuleName').change(function () {
+        var selectedItem = $(this).val();
+        getTabListForDropDown(selectedItem);
+    });
+
+    $('#SrcTabId').change(function () { getSubTabList(); });
+    function getSubTabList() {
+        $.post("/Admin/ErpFeature/GetSubTabList?moduleName=" + $("#SrcModuleId").val() + "&tabName=" + $("#SrcTabId").val(), function (data) {
+            $("#tb_Container").html(data);
+            altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 400);
+        });
+    }
+    function getTabListForDropDown(selectedItem) {
+        var items = "<option value=''></option>";
+        if (selectedItem != "" && selectedItem != 0) {
+            $.post('/Admin/UserManagement/TabList?id=' + selectedItem, function (data) {
+                var items = "";
+                var isSeleted = '';
+                if (data.Selected) {
+                    isSeleted = " selected='selected'";
+                }
+                $.each(data, function (i, data) {
+                    items += "<option value='" + data.Value + isSeleted + "'>" + data.Text + "</option>";
+                });
+                $("#Tabid").html(items);
+                $("#SrcTabId").html(items);
+            });
+        }
+    }
+    InitTable();
+    function InitTable() {
+        var $tHead = '<tr><th>SL</th><th>Module Name</th><th>Tab Name</th><th>Feature Name</th><th>URL</th><th>Quick Link</th><th>SL/Order</th></tr>',
+            $row = '<div class="rk_dtButton2"></div><table id="rk_dtInfo2" class="uk-table uk-table-hover uk-table-condensed" cellspacing="0" width="100%">'
+                + '<thead class="md-bg-blue-grey-100">' + $tHead + '</thead><tfoot style="display:none;">' + $tHead + '</tfoot><tbody>';
+        $row += '</tbody></table>';
+        $("#tb_Container").html($row);
+        altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 400);
+    }
+
+    function OpenPopupModel(elem) {
+        if (elem === 0) {
+            $("#ModuleName").val("");
+            $("#Tabid").val("");
+            $("#Subfeaturename").val("");
+            $("#Url").val("");
+            $("#QuickLink").val("");
+            $("#Sl").val("");
+
+            $("#Id").val("0");
+            $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-success").text("Create");
+            $("#modalTitle").text("Create Sub Feature");
+        }
+        else {
+            $.post("/Admin/ErpFeature/GetSingleSubFeatureById?Id=" + elem, function (data) {
+                $("#ModuleName").val(data.ModuleName);
+                $("#Tabid").val(data.Tabid);
+                $("#Subfeaturename").val(data.Subfeaturename);
+                $("#Url").val(data.Url);
+                $("#QuickLink").val(data.QuickLink);
+                $("#Sl").val(data.Sl);
+
+                $("#Id").val(data.Id);
+                $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-danger").text("Update");
+                $("#modalTitle").text("Update Sub Feature");
+            });
+        }
+        UIkit.modal("#myModal", { bgclose: false, keyboard: false }).show();
+    }
+
+    function SubmitData() {
+        var errorMsg = '';
+        UIkit.modal.confirm('Are you sure to Submit this?', function () {
+            if (!$("#ModuleName").val()) {
+                errorMsg = "Sorry, Please Check Required Fields.";
+                UIkit.modal.alert(errorMsg);
+            }
+            else if (!$("#Tabid").val()) {
+                errorMsg = "Sorry, Please Check Required Fields.";
+                UIkit.modal.alert(errorMsg);
+            }
+            else if (!$("#Subfeaturename").val()) {
+                errorMsg = "Sorry, Please Check Required Fields.";
+                UIkit.modal.alert(errorMsg);
+            }
+            else if (!$("#Url").val()) {
+                errorMsg = "Sorry, Please Check Required Fields.";
+                UIkit.modal.alert(errorMsg);
+            }
+            else {
+                $.post("/Admin/ErpFeature/AddUpdateSubFeatureInfo", $("#InputForm").serialize(), function (data) {
+                    if (data.Success) {
+                        UIkit.modal.alert(data.Msg);
+                        UIkit.modal("#myModal").hide();
+                        getSubTabList();
+                    }
+                    else {
+                        UIkit.modal.alert(data.Msg);
+                    }
+                });
+            }
+        });
+    }
+
+    //DeleteTab
+    function DeleteTab(elem) {
+        var errorMsg = '';
+        UIkit.modal.confirm('Are you sure to Delete this?', function () {
+            $.post("/Admin/ErpFeature/DeleteSubTabById?ID=" + elem, function (data) {
+                if (data.Success) {
+                    UIkit.modal.alert(data.Message);
+                    getSubTabList();
+                }
+                else {
+                    UIkit.modal.alert(data.Message);
+                }
+            });
+
+        });
+        if (errorMsg.length) UIkit.modal.alert(errorMsg);
+    }
+</script>

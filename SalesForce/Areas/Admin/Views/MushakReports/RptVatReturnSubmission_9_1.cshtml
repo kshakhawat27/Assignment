@@ -1,0 +1,599 @@
+﻿@{
+    ViewBag.Title = "RptVatReturnSubmission_9_1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+
+    #tableMain, #tableMain th, #tableMain td {
+        border: 1px solid black;
+        margin: 0 auto;
+        /**/ width: auto;
+        border-collapse: collapse; /*font-size: 15px;*/
+    }
+
+    #tablePart3 {
+        width: 100%;
+    }
+
+        #tablePart3 th, #tablePart3 td {
+            border: 1px solid black;
+            margin: 0 auto;
+            /**/ width: auto;
+            border-collapse: collapse; /*font-size: 15px;*/
+        }
+
+    .wrappable {
+        overflow: hidden;
+        max-width: 200px;
+        word-wrap: break-word;
+    }
+
+    .gItem:hover {
+        background-color: yellow;
+        cursor: pointer;
+    }
+
+    table, th, td {
+        border: 2px solid black;
+        border-collapse: collapse;
+        /*font-size: 15px;*/
+    }
+
+    th, td {
+        padding: 5px;
+        text-align: left;
+        /*font-size: 12px;*/
+    }
+
+    #signTab, #signTab th, #signTab td {
+        border: none;
+    }
+
+    #terms, #terms th, #terms td {
+        border: none;
+    }
+
+    #part2 th, #part2 td {
+        border: none;
+    }
+
+    #part3 th, #part3 td {
+        border: none;
+        width: auto;
+    }
+
+    #totalField, #totalField th, #totalField td {
+        border: none;
+    }
+
+    /*#toId, #toId th, #toId td {
+        border: none;
+    }*/
+
+    .footerSign {
+        margin-top: 10px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .footerLine {
+        margin-top: 10px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    @@media print {
+        .footerSign {
+            bottom: 100px;
+            position: fixed;
+        }
+
+        .footerLine {
+            bottom: 30px;
+            position: fixed;
+        }
+    }
+
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        /*background-color: red;*/
+        color: white;
+        text-align: left;
+    }
+
+    .footer2 {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        /*background-color: red;*/
+        color: white;
+        text-align: right;
+    }
+
+    #InputForm {
+        font-weight: 500;
+    }
+
+    .rectangle {
+        height: 25px;
+        width: 50px;
+        background-color: white;
+        border: solid black 1px;
+    }
+
+    .subForms {
+        cursor: pointer;
+    }
+
+    .detailForms {
+        cursor: pointer;
+    }
+    /*.material-icons {
+        font-size: 24px;
+            }*/
+</style>
+
+@model SalesForce.Domain.Model.Inventory.VatReturnsubmissionEntity
+<form id="InputForm" action="" style="margin: 0 auto;">
+    <div class="uk-grid" data-uk-grid-margin style="width: 90%; margin: 0 auto;">
+        <div class="uk-width-medium-1-6" style="width: 20%; margin: 0 auto; text-align: left;">
+            <img src="~/Images/nbr_logo.png" alt="Sample Photo" />
+        </div>
+        <div class="uk-width-medium-1-2" style="width: 60%; margin: 0 auto; text-align: center;">
+            <h6>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার</h6>
+            <h6><b>জাতীয় রাজস্ব বোর্ড</b></h6>
+            <br />
+            <h5><b>মূল্য সংযোজন কর দাখিলপত্র</b></h5>
+            <h6>[বিধি ৪৭ এর উপ-বিধি (১) দ্রষ্টব্য]</h6>
+            <h6>[ফর্ম পূরণের পূর্বে নির্দেশাবলী পড়ুন]</h6>
+        </div>
+        <div class="uk-width-medium-1-6" style="width: 20%; margin: 0 auto; text-align: right;">
+            <div style="margin-top: 10px;">
+                <b style="border: 2px solid; padding: 5px;">মূসক-৯.১</b>
+            </div>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin style="width: 100%; margin: 0 auto; margin-top:10px; display: none;">
+        <div class="uk-width-medium-1-1" style="width: 100%;">
+            <table style="width: auto; float: right; margin-right:80px;">
+                <tr>
+                    <th>
+                        <b>মূসক-৯.১</b>
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin style="width: 100%; margin: 0 auto; margin-top:10px;">
+        <div class="uk-width-medium-1-1" style="width: 100%;">
+            <table id="tableMain">
+                <tr style="text-align:center;">
+                    <td colspan="3" style="text-align:center;background-color:#E2BFF1;"><b> অংশ-১: করদাতার তথ্য </b></td>
+                </tr>
+                <tr>
+                    <td style="width:400px;"> (১) ব্যবসায় সনাক্তকরণ সংখ্যা </td>
+                    <td style="width:40px; text-align:center;"> : </td>
+                    <td style="width:700px;"> 00086861616-0306 </td>
+                </tr>
+                <tr>
+                    <td> (২) করদাতার নাম </td>
+                    <td style="width:40px; text-align:center;"> : </td>
+                    <td> Pakiza Technovation Limited </td>
+                </tr>
+                <tr>
+                    <td> (৩) করদাতার ঠিকানা </td>
+                    <td style="width:40px; text-align:center;"> : </td>
+                    <td> Khordo Nowpara, Rashulpur, Narshingdi Sadar, Narshingdi-1604; Narshingdi Sadar PS; Narshingdi-1604; Bangladesh </td>
+                </tr>
+                <tr>
+                    <td> (৪) ব্যবসার প্রকৃতি </td>
+                    <td style="width:40px; text-align:center;"> : </td>
+                    <td> Private Limited </td>
+                </tr>
+                <tr>
+                    <td> (৫) অর্থনৈতিক কার্যক্রম এর প্রকৃতি </td>
+                    <td style="width:40px; text-align:center;"> : </td>
+                    <td> Retail/Wholesale Trading, Imports </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    @Html.Raw(ViewBag.PartTwo)
+    @Html.Raw(ViewBag.PartThree)
+    @Html.Raw(ViewBag.PartFour)
+    @Html.Raw(ViewBag.PartFive)
+    @Html.Raw(ViewBag.PartSix)
+    @Html.Raw(ViewBag.PartSeven)
+    @Html.Raw(ViewBag.PartEight)
+    @Html.Raw(ViewBag.PartNine)
+    @Html.Raw(ViewBag.PartTen_Eleven)
+    @Html.Raw(ViewBag.PartTwelve)
+
+
+    @Html.Raw(ViewBag.SubFormA)
+    @Html.Raw(ViewBag.SubFormB)
+    <div class="uk-grid" data-uk-grid-margin style="width: 100%; margin: 0 auto; margin-top:20px;">
+        <div class="uk-width-medium-1-1">
+            <table id="tablePart3">
+                <tr>
+                    <td colspan="10" height="50" style="text-align:left;background-color:#FAD7A0;"><b> সাবফর্ম - ( নোট ৬, ১৮ এর জন্য প্রযোজ্য ) </b></td>
+                </tr>
+                <tr>
+                    <th style="text-align:center"> ক্রমিক সংখ্যা </th>
+                    <th style="text-align:center"> পণ্য/সেবার বর্ণনা </th>
+                    <th style="text-align:center"> পণ্য/সেবার কোড </th>
+                    <th style="text-align:center"> পণ্য/সেবার নাম </th>
+                    <th style="text-align:center"> পরিমাপের একক (ক) </th>
+                    <th style="text-align:center"> পরিমাণ (খ) </th>
+                    <th style="text-align:center"> প্রকৃত বিক্রয়/ক্রয় মূল্য (গ) </th>
+                    <th style="text-align:center"> সম্পূরক শুল্ক (ঘ) </th>
+                    <th style="text-align:center"> মূল্য সংযোজন কর (ঙ) </th>
+                    <th style="text-align:center"> মন্তব্য </th>
+                </tr>
+                <tr>
+                    <th style="text-align:right" colspan="5"> মোট </th>
+                    <th style="text-align:right"> 0.00 </th>
+                    <th style="text-align:right"> 0.00 </th>
+                    <th style="text-align:right"> 0.00 </th>
+                    <th style="text-align:center"> 0.00 </th>
+                    <th style="text-align:center"></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin style="width: 100%; margin: 0 auto; margin-top:20px;">
+        <div class="uk-width-medium-1-1">
+            <table id="tablePart3">
+                <tr>
+                    <td colspan="9" height="50" style="text-align:left;background-color:#FAD7A0;"><b> সাবফর্ম - ( নোট ৮ এর জন্য প্রযোজ্য ) </b></td>
+                </tr>
+                <tr>
+                    <th style="text-align:center"> ক্রমিক সংখ্যা </th>
+                    <th style="text-align:center"> ক্যাটাগরী </th>
+                    <th style="text-align:center"> পণ্য/সেবার বর্ণনা </th>
+                    <th style="text-align:center"> পণ্য/সেবার কোড </th>
+                    <th style="text-align:center"> পণ্য/সেবার নাম </th>
+                    <th style="text-align:center"> মূল্য (ক) </th>
+                    <th style="text-align:center"> সম্পূরক শুল্ক (খ) </th>
+                    <th style="text-align:center"> মূল্য সংযোজন কর (গ) </th>
+                    <th style="text-align:center"> মন্তব্য </th>
+                </tr>
+                <tr>
+                    <th style="text-align:right" colspan="5"> মোট </th>
+                    <th style="text-align:right"> 0.00 </th>
+                    <th style="text-align:right"> 0.00 </th>
+                    <th style="text-align:right"> 0.00 </th>
+                    <th style="text-align:center"></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    @Html.Raw(ViewBag.SubFormE)
+    <div class="uk-grid" data-uk-grid-margin style="width: 100%; margin: 0 auto; margin-top:20px;">
+        <div class="uk-width-medium-1-1">
+            <table id="tablePart3">
+                <tr>
+                    <td colspan="10" height="50" style="text-align:left;background-color:#FAD7A0;"><b> সাবফর্ম - ( নোট ২৬ এর জন্য প্রযোজ্য ) </b></td>
+                </tr>
+                <tr>
+                    <th style="text-align:center"> ক্রমিক সংখ্যা </th>
+                    <th style="text-align:center"> ডেবিট নোট নং </th>
+                    <th style="text-align:center"> প্রদানের তারিখ </th>
+                    <th style="text-align:center"> ভ্যাট চালান নং </th>
+                    <th style="text-align:center"> ভ্যাট চালান তারিখ </th>
+                    <th style="text-align:center"> বৃদ্ধিকারী সমন্বয় এর মূল্য </th>
+                    <th style="text-align:center"> বৃদ্ধিকারী সমন্বয় এর পরিমাণ </th>
+                    <th style="text-align:center"> মূল্য সংযোজন কর বৃদ্ধিকারী সমন্বয় </th>
+                    <th style="text-align:center"> সম্পূরক শুল্ক বৃদ্ধিকারী সমন্বয় </th>
+                    <th style="text-align:center"> মন্তব্য </th>
+                </tr>
+                <tr>
+                    <th style="text-align:center"> ১ </th>
+                    <th style="text-align:center"> ২ </th>
+                    <th style="text-align:center"> ৩ </th>
+                    <th style="text-align:center"> ৪ </th>
+                    <th style="text-align:center"> ৫ </th>
+                    <th style="text-align:center"> ৬ </th>
+                    <th style="text-align:center"> ৭ </th>
+                    <th style="text-align:center"> ৮ </th>
+                    <th style="text-align:center"> ৯ </th>
+                    <th style="text-align:center"> ১০ </th>
+                </tr>
+                <tr>
+                    <td><br /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin style="width: 100%; margin: 0 auto; margin-top:20px;">
+        <div class="uk-width-medium-1-1">
+            <table id="tablePart3">
+                <tr>
+                    <td colspan="6" height="50" style="text-align:left;background-color:#FAD7A0;"><b> সাবফর্ম - ( নোট ২৭ এবং ৩২ এর জন্য প্রযোজ্য ) </b></td>
+                </tr>
+                <tr>
+                    <th style="text-align:center"> ক্রমিক সংখ্যা </th>
+                    <th style="text-align:center"> চালান নং </th>
+                    <th style="text-align:center"> তারিখ </th>
+                    <th style="text-align:center"> মূল্য </th>
+                    <th style="text-align:center"> মূল্য সংযোজন কর </th>
+                    <th style="text-align:center"> মন্তব্য </th>
+                </tr>
+                <tr>
+                    <td><br /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th style="text-align:right" colspan="3"> মোট </th>
+                    <th style="text-align:right"> 0.00 </th>
+                    <th style="text-align:right"> 0.00 </th>
+                    <th style="text-align:center"></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    @Html.Raw(ViewBag.SubFormH)
+    @Html.Raw(ViewBag.SubFormI)
+    <div class="uk-grid" data-uk-grid-margin style="width: 100%; margin: 0 auto; margin-top:20px;">
+        <div class="uk-width-medium-1-1">
+            <table id="tablePart3">
+                <tr>
+                    <td colspan="10" height="50" style="text-align:left;background-color:#FAD7A0;"><b> সাবফর্ম - ( নোট ৩১ এর জন্য প্রযোজ্য ) </b></td>
+                </tr>
+                <tr>
+                    <th style="text-align:center"> ক্রমিক সংখ্যা </th>
+                    <th style="text-align:center"> ক্রেডিট নোট নং </th>
+                    <th style="text-align:center"> প্রদানের তারিখ </th>
+                    <th style="text-align:center"> ভ্যাট চালান নং </th>
+                    <th style="text-align:center"> ভ্যাট চালান তারিখ </th>
+                    <th style="text-align:center"> হ্রাসকারী সমন্বয় এর মূল্য </th>
+                    <th style="text-align:center"> হ্রাসকারী সমন্বয় এর পরিমাণ </th>
+                    <th style="text-align:center"> মূল্য সংযোজন কর হ্রাসকারী সমন্বয় </th>
+                    <th style="text-align:center"> সম্পূরক শুল্ক হ্রাসকারী সমন্বয় </th>
+                    <th style="text-align:center"> মন্তব্য </th>
+                </tr>
+                <tr>
+                    <th style="text-align:center"> ১ </th>
+                    <th style="text-align:center"> ২ </th>
+                    <th style="text-align:center"> ৩ </th>
+                    <th style="text-align:center"> ৪ </th>
+                    <th style="text-align:center"> ৫ </th>
+                    <th style="text-align:center"> ৬ </th>
+                    <th style="text-align:center"> ৭ </th>
+                    <th style="text-align:center"> ৮ </th>
+                    <th style="text-align:center"> ৯ </th>
+                    <th style="text-align:center"> ১০ </th>
+                </tr>
+                <tr>
+                    <td><br /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    @Html.Raw(ViewBag.SubFormK)
+
+
+    @Html.HiddenFor(m => m.Returnmonth)
+
+
+    <div class="uk-modal" id="modalSubFormA">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style='width: 100%; margin: 0 auto;' id="mainDivA">
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal" id="modalSubFormB">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style='width: 100%; margin: 0 auto;' id="mainDivB">
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal" id="modalSubFormC">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style='width: 100%; margin: 0 auto;' id="mainDivC">
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal" id="modalSubFormD">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style="margin-top: 20px;" id="mainDivD">
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal" id="modalSubFormE">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style="margin-top: 20px;" id="mainDivE">
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal" id="modalSubFormF">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style="margin-top: 20px;" id="mainDivF">
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal" id="modalSubFormG">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style="margin-top: 20px;" id="mainDivG">
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal" id="modalSubFormH">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style="margin-top: 20px;" id="mainDivH">
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal" id="modalSubFormI">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style="margin-top: 20px;" id="mainDivI">
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal" id="modalSubFormJ">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style="margin-top: 20px;" id="mainDivJ">
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal" id="modalSubFormK">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style="margin-top: 20px;" id="mainDivK">
+            </div>
+        </div>
+    </div>
+
+    <div class="uk-modal" id="modalDetN27">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style="margin-top: 20px;" id="mainDivN27">
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal" id="modalDetN32">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style="margin-top: 20px;" id="mainDivN32">
+            </div>
+        </div>
+    </div>
+    <div class="uk-modal" id="modalDetN40">
+        <div class="uk-modal-dialog uk-modal-dialog-large uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            <div class='uk-grid' data-uk-grid-margin style="margin-top: 20px;" id="mainDivN40">
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script type="text/javascript">
+    function goToSubForm_A(note) {      // for note 3,4,5,7,10,12,14,18,19,20,21
+        $.post("/Admin/MushakReports/GetSubFormADataByNote?note=" + note + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivA").html(data);
+        });
+        UIkit.modal("#modalSubFormA", { bgclose: false, keyboard: false }).show();
+    }
+    function goToSubForm_B(note) {      // for note 1,2,11,13,15,17,22
+        $.post("/Admin/MushakReports/GetSubFormBDataByNote?note=" + note + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivB").html(data);
+        });
+        UIkit.modal("#modalSubFormB", { bgclose: false, keyboard: false }).show();
+    }
+    function goToSubForm_C(note) {      // for note 6,18
+        $.post("/Admin/MushakReports/GetSubFormCDataByNote?note=" + note + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivC").html(data);
+        });
+        UIkit.modal("#modalSubFormC", { bgclose: false, keyboard: false }).show();
+    }
+    function goToSubForm_D(note) {      // for note 8
+        $.post("/Admin/MushakReports/GetSubFormDDataByNote?note=" + note + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivD").html(data);
+        });
+        UIkit.modal("#modalSubFormD", { bgclose: false, keyboard: false }).show();
+    }
+    function goToSubForm_E(note) {      // for note 24
+        $.post("/Admin/MushakReports/GetSubFormEDataByNote?note=" + note + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivE").html(data);
+        });
+        UIkit.modal("#modalSubFormE", { bgclose: false, keyboard: false }).show();
+    }
+    function goToSubForm_F(note) {      // for note 26
+        $.post("/Admin/MushakReports/GetSubFormFDataByNote?note=" + note + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivF").html(data);
+        });
+        UIkit.modal("#modalSubFormF", { bgclose: false, keyboard: false }).show();
+    }
+    function goToSubForm_G(note) {      // for note 27,32
+        $.post("/Admin/MushakReports/GetSubFormGDataByNote?note=" + note + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivG").html(data);
+        });
+        UIkit.modal("#modalSubFormG", { bgclose: false, keyboard: false }).show();
+    }
+    function goToSubForm_H(note) {      // for note 29
+        $.post("/Admin/MushakReports/GetSubFormHDataByNote?note=" + note + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivH").html(data);
+        });
+        UIkit.modal("#modalSubFormH", { bgclose: false, keyboard: false }).show();
+    }
+    function goToSubForm_I(note) {      // for note 30
+        $.post("/Admin/MushakReports/GetSubFormIDataByNote?note=" + note + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivI").html(data);
+        });
+        UIkit.modal("#modalSubFormI", { bgclose: false, keyboard: false }).show();
+    }
+    function goToSubForm_J(note) {      // for note 31
+        $.post("/Admin/MushakReports/GetSubFormJDataByNote?note=" + note + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivJ").html(data);
+        });
+        UIkit.modal("#modalSubFormJ", { bgclose: false, keyboard: false }).show();
+    }
+    function goToSubForm_K(note) {      // for note 58,59,60,61,62,63,64
+        $.post("/Admin/MushakReports/GetSubFormKDataByNote?note=" + note + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivK").html(data);
+        });
+        UIkit.modal("#modalSubFormK", { bgclose: false, keyboard: false }).show();
+    }
+
+    function detailedViewNote27() {
+        $.post("/Admin/MushakReports/GetBreakdownofNote_27ByMonth?note=27" + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivN27").html(data);
+        });
+        UIkit.modal("#modalDetN27", { bgclose: false, keyboard: false }).show();
+    }
+    function detailedViewNote32() {
+        $.post("/Admin/MushakReports/GetBreakdownofNote_32ByMonth?note=32" + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivN32").html(data);
+        });
+        UIkit.modal("#modalDetN32", { bgclose: false, keyboard: false }).show();
+    }
+    function detailedViewNote40() {
+        $.post("/Admin/MushakReports/GetBreakdownofNote_40ByMonth?note=40" + "&retMonth=" + $("#Returnmonth").val(), function (data) {
+            $("#mainDivN40").html(data);
+        });
+        UIkit.modal("#modalDetN40", { bgclose: false, keyboard: false }).show();
+    }
+</script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

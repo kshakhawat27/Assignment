@@ -1,0 +1,170 @@
+﻿
+@{
+    ViewBag.Title = "Service/Customize Code";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model SalesForce.Domain.Model.Inventory.VatServicecodeEntity
+
+
+<form id="InputForm" action="">
+    <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-1 uk-container-center" id="tb_Container">
+        </div>
+    </div>
+
+    <div class="md-fab-wrapper">
+        <span class="md-fab md-fab-accent" id="note_add" onclick="OpenPopupModel(0);"><i class="material-icons">add</i> </span>
+    </div>
+    <div class="uk-modal" id="myModal">
+        <div class="uk-modal-dialog uk-modal-body uk-modal-dialog-medium" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            @Html.HiddenFor(m => m.Id)
+            <div class="uk-modal-header">
+                <h3 class="uk-modal-title" id="modalTitle"></h3>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Service Code<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Servicecode, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Description<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Description, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>SD<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Sd, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin style="display:none;">
+                <div class="uk-width-1-1">
+                    <label>VAT<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Vat, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>VAT Category<span class="uk-text-danger"> *</span></label>
+                    @Html.DropDownListFor(m => m.VatCategoryId, (List<SelectListItem>)ViewData["VATCategoryList"], new { @class = "md-input md-input-success label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Remarks<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Remarks, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>VDS Applicable?<span class="uk-text-danger"> *</span></label>
+                    @Html.DropDownListFor(m => m.IsVDS, (List<SelectListItem>)ViewData["IsApplicableList"], new { @class = "md-input md-input-success label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>IsActive<span class="uk-text-danger"> *</span></label>
+                    @Html.DropDownListFor(m => m.Isactive, (List<SelectListItem>)ViewData["IsActiveList"], new { @class = "md-input md-input-success label-fixed" })
+                </div>
+            </div>
+
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" class="md-btn md-btn-mini md-btn-success" id="submitBtn" onclick="SubmitData();">Create</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+<!--  forms advanced functions -->
+<script type="text/javascript" src="@Url.Content(" ~/Altair/assets/js/pages/forms_advanced.min.js")"></script>
+<!-- datatables -->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+<!-- datatables buttons-->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/dataTables.buttons.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/buttons.uikit.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/jszip/dist/jszip.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/pdfmake.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/vfs_fonts.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.colVis.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.html5.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.print.js")"></script>
+<!-- datatables custom integration -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/datatables.uikit.js")"></script>
+<!--  datatables functions -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/pages/plugins_datatables.js")"></script>
+
+<script type="text/javascript">
+
+    function OpenPopupModel(elem) {
+        if (elem === 0) {
+            $("#Servicecode").val("");
+            $("#Description").val("");
+            $("#Sd").val("0.00");
+            $("#Vat").val("");
+            $("#IsVDS").val("1");
+            $("#VatCategoryId").val("");
+            $("#Remarks").val("");
+            $("#Isactive").val("1");
+
+            $("#Id").val("0");
+            $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-success").text("Create");
+            $("#modalTitle").text("Create Service/Customize Information");
+        }
+        else {
+            $.post("/Admin/Settings/GetSingleVatServicecodeRecordById?Id=" + elem, function (data) {
+                $("#Servicecode").val(data.Servicecode);
+                $("#Description").val(data.Description);
+                $("#Sd").val(data.Sd);
+                $("#Vat").val(data.Vat);
+                $("#IsVDS").val(data.IsVDS);
+                $("#VatCategoryId").val(data.VatCategoryId.toLowerCase());
+                $("#Remarks").val(data.Remarks);
+                $("#Isactive").val(data.Isactive);
+
+                $("#Id").val(data.Id);
+                $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-danger").text("Update");
+                $("#modalTitle").text("Update Service/Customize Information");
+            });
+        }
+        //UIkit.modal("#myModal").show();
+        UIkit.modal("#myModal", { bgclose: false, keyboard: false }).show();
+    }
+
+
+    GetSearchResult();
+
+    function GetSearchResult() {
+        $.post("/Admin/Settings/GetAllVatServicecodeRecord", function (data) {
+            $("#tb_Container").html(data);
+            //altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 380);
+            altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 380);
+        });
+    }
+
+    function SubmitData() {
+        var errorMsg = '';
+        UIkit.modal.confirm('Are you sure to Submit this?', function () {
+            if (!$("#Servicecode").val()) {
+                errorMsg = "Service Code Required.";
+                UIkit.modal.alert(errorMsg);
+            }
+            else {
+                $.post("/Admin/Settings/Save_Update_VatServicecodeInfo", $("#InputForm").serialize(), function (data) {
+                    if (data.Success) {
+                        UIkit.modal.alert(data.Msg);
+                        UIkit.modal("#myModal").hide();
+                        GetSearchResult();
+                    }
+                    else {
+                        UIkit.modal.alert(data.Msg);
+                    }
+                });
+            }
+        });
+    }
+</script>
+

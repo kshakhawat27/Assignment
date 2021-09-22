@@ -1,0 +1,178 @@
+﻿
+@{
+    ViewBag.Title = "VATRetNote";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model SalesForce.Domain.Model.Inventory.VatReturnnoteEntity
+
+<form id="InputForm" action="">
+    <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-1 uk-container-center" id="tb_Container">
+        </div>
+    </div>
+
+    <div class="md-fab-wrapper">
+        <span class="md-fab md-fab-accent" id="note_add" onclick="OpenPopupModel(0);"><i class="material-icons">add</i> </span>
+    </div>
+    <div class="uk-modal" id="myModal">
+        <div class="uk-modal-dialog uk-modal-body uk-modal-dialog-large" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            @Html.HiddenFor(m => m.Id)
+            <div class="uk-modal-header">
+                <h3 class="uk-modal-title" id="modalTitle"></h3>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <label>Note No (Eng)<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Noteno, new { @class = "md-input label-fixed", @type = "number", @min = "0" })
+                </div>
+
+                <div class="uk-width-1-2">
+                    <label>Tag Note No<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Tagnoteno, new { @class = "md-input label-fixed", @type = "number", @min = "0" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <label>Note No (Ban)<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Notenobangla, new { @class = "md-input label-fixed"})
+                </div>
+
+                <div class="uk-width-1-2">
+                    <label>Note Name (Eng)<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Notename, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <label>Note Name (Ban)<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Notenamebangla, new { @class = "md-input label-fixed" })
+                </div>
+
+                <div class="uk-width-1-2">
+                    <label>Economic Code<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Economiccode, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <label>Part No<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Partno, new { @class = "md-input label-fixed" })
+                </div>
+
+                <div class="uk-width-1-2">
+                    <label>Sub Form<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Subform, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <label>Show On Report<span class="uk-text-danger"> *</span></label>
+                    @Html.DropDownListFor(m => m.Showonreport, (List<SelectListItem>)ViewData["IsShowOnRep"], new { @class = "md-input md-input-success label-fixed" })
+                </div>
+
+                <div class="uk-width-1-2">
+                    <label>IsManualEntry<span class="uk-text-danger"> *</span></label>
+                    @Html.DropDownListFor(m => m.Manual, (List<SelectListItem>)ViewData["IsManual"], new { @class = "md-input md-input-success label-fixed" })
+                </div>
+            </div>
+
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" class="md-btn md-btn-mini md-btn-success" id="submitBtn" onclick="SubmitData();">Create</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+<!--  forms advanced functions -->
+<script type="text/javascript" src="@Url.Content(" ~/Altair/assets/js/pages/forms_advanced.min.js")"></script>
+<!-- datatables -->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+<!-- datatables buttons-->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/dataTables.buttons.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/buttons.uikit.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/jszip/dist/jszip.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/pdfmake.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/vfs_fonts.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.colVis.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.html5.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.print.js")"></script>
+<!-- datatables custom integration -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/datatables.uikit.js")"></script>
+<!--  datatables functions -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/pages/plugins_datatables.js")"></script>
+
+<script type="text/javascript">
+
+    function OpenPopupModel(elem) {
+        if (elem === 0) {
+            $("#Noteno").val("0");
+            $("#Tagnoteno").val("0");
+            $("#Notenobangla").val("");
+            $("#Notename").val("");
+            $("#Notenamebangla").val("");
+            $("#Economiccode").val("");
+            $("#Partno").val("");
+            $("#Subform").val("");
+            $("#Showonreport").val("1");
+            $("#Manual").val("0");
+
+
+            $("#Id").val("0");
+            $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-success").text("Create");
+            $("#modalTitle").text("Create New VAT Return Note");
+        }
+        else {
+            $.post("/Admin/Settings/GetSingleVATReturnNoteById?Id=" + elem, function (data) {
+                $("#Subform").val(data.Subform);
+                $("#Noteno").val(data.Noteno);
+                $("#Tagnoteno").val(data.Tagnoteno);
+                $("#Notename").val(data.Notename);
+                $("#Notenobangla").val(data.Notenobangla);
+                $("#Notenamebangla").val(data.Notenamebangla);
+                $("#Economiccode").val(data.Economiccode);
+                $("#Partno").val(data.Partno);
+                $("#Manual").val(data.Manual);
+                $("#Showonreport").val(data.Showonreport);
+
+                $("#Id").val(data.Id);
+
+                $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-danger").text("Update");
+                $("#modalTitle").text("Update VAT Return Note");
+            });
+        }
+        UIkit.modal("#myModal", { bgclose: false, keyboard: false }).show();
+    }
+
+
+    GetSearchResult();
+    function GetSearchResult() {
+        $.post("/Admin/Settings/GetVATReturnNoteList", function (data) {
+            $("#tb_Container").html(data);
+            altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 380);
+        });
+    }
+
+    function SubmitData() {
+        var errorMsg = '';
+        UIkit.modal.confirm('Are you sure to Submit this?', function () {
+            if (!$("#Noteno").val()) {
+                errorMsg = "Sorry, Please Check Required Fields.";
+                UIkit.modal.alert(errorMsg);
+            }
+            else {
+                $.post("/Admin/Settings/AddUpdateVATReturnNote", $("#InputForm").serialize(), function (data) {
+                    if (data.Success) {
+                        UIkit.modal.alert(data.Msg);
+                        UIkit.modal("#myModal").hide();
+                        GetSearchResult();
+                    }
+                    else {
+                        UIkit.modal.alert(data.Msg);
+                    }
+                });
+            }
+        });
+    }
+</script>

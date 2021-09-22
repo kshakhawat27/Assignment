@@ -1,0 +1,197 @@
+﻿
+@{
+                /**/
+
+                ViewBag.Title = "User Information";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model  SalesForce.Domain.Admin.EmployeeModel
+
+
+<form id="InputForm" action="">
+
+    <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-1 uk-container-center" id="tb_Container">
+        </div>
+    </div>
+
+    <div class="md-fab-wrapper">
+        <span class="md-fab md-fab-accent" id="note_add" onclick="OpenPopupModel(0);"><i class="material-icons">add</i> </span>
+    </div>
+    <div class="uk-modal" id="myModal">
+        <div class="uk-modal-dialog" id="myModalBody">
+
+            @Html.HiddenFor(m => m.Id)
+            <div class="uk-modal-header">
+                <h3 class="uk-modal-title" id="modalTitle"></h3>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Employee Id<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Employeeidno, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>First Name</label>
+                    @Html.TextAreaFor(m => m.Firstname, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Last Name</label>
+                    @Html.TextAreaFor(m => m.Lastname, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Email</label>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Joining Date</label>
+                    @Html.TextBoxFor(m => m.Joiningdate, new { @class = "md-input label-fixed", @readonly = "readonly", @data_uk_datepicker = "{format:'DD/MM/YYYY'}" })
+                </div>
+            </div>
+ 
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Department<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Department, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Designation<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Designaton, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" class="md-btn md-btn-flat md-btn-success" id="submitBtn" onclick="SubmitData();">Create</button>
+                <button type="button" class="md-btn md-btn-flat md-btn-warning uk-modal-close uk-float-left">Close</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+
+
+
+<!--  forms advanced functions -->
+<script type="text/javascript" src="@Url.Content(" ~/Altair/assets/js/pages/forms_advanced.min.js")"></script>
+<!-- datatables -->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+<!-- datatables buttons-->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/dataTables.buttons.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/buttons.uikit.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/jszip/dist/jszip.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/pdfmake.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/vfs_fonts.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.colVis.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.html5.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.print.js")"></script>
+<!-- datatables custom integration -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/datatables.uikit.js")"></script>
+<!--  datatables functions -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/pages/plugins_datatables.js")"></script>
+
+
+
+<script type="text/javascript">
+    GetSearchResult();
+    function GetSearchResult() {
+        $.post("/Admin/UserManagement/GetUserList", function (data) {
+            var $tHead = '<tr><th>Actions</th><th>SL</th><th>Employee Id</th><th>First Name</th><th> Last Name</th><th>Email</th><th>Joiningdate</th><th>Department</th><th>Designation</th></tr>',
+                $row = '<div class="rk_dtButton2"></div><table id="rk_dtInfo2" class="uk-table uk-table-hover uk-table-condensed" cellspacing="0" width="100%">'
+                    + '<thead class="md-bg-blue-grey-100">' + $tHead + '</thead><tfoot>' + $tHead + '</tfoot><tbody>';
+            $.each(data, function (index, item) {
+                $actionOpt = '<i onclick="OpenPopupModel(\'' + item.Id + '\');" title="Edit This" class="md-icon md-24 material-icons md-color-orange-400">&#xE254;</i>' + '<i onclick="DeleteData(\'' + item.Id + '\');" title="Delete This" class="md-icon md-24 material-icons md-color-red-200">delete</i>';
+                $row += "<tr>"
+
+                    + "<td>" + $actionOpt + "</td>"
+                    + "<td>" + item.SL + "</td>"
+                    + "<td>" + item.Employeeidno + "</td>"
+                    + "<td>" + item.Firstname + "</td>"
+                    + "<td>" + item.Lastname + "</td>"
+                    + "<td>" + item.Email + "</td>"
+                    + "<td>" + item.Joiningdate + "</td>"
+                    + "<td>" + item.Department + "</td>"
+                    + "<td>" + item.Designaton + "</td>"
+                    + "</tr>";
+            });
+            $row += '</tbody></table>';
+            $("#tb_Container").html($row);
+            altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 380);
+        });
+    }
+
+    function OpenPopupModel(elem) {
+        if (elem == 0) {
+            $("#Employeeidno").val("");
+            $("#Firstname").val("");
+            $("#Lastname").val("");
+            $("#Email").val("");
+            $("#Joiningdate").val("");
+            $("#Department").val("");
+            $("#Designaton").val("");
+
+            $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-success").text("Create");
+            $("#modalTitle").text("Create User");
+        }
+        else {
+            $.post("/Admin/UserManagement/GetSingleAdmUserRecordById?Id=" + elem, function (data) {
+                $("#Employeeidno").val(data.Employeeidno);
+                $("#Firstname").val(data.Firstname);
+                $("#Lastname").val(data.Lastname);
+                $("#Email").val(data.Email);
+                $("#Joiningdate").val(data.Joiningdate);
+                $("#Department").val(data.Department);
+                $("#Designaton").val(data.Designaton);
+
+                $("#Id").val(data.Id);
+                $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-danger").text("Update");
+                $("#modalTitle").text("Update User");
+            });
+        }
+        UIkit.modal("#myModal").show();
+    }
+</script>
+
+<script type="text/javascript">
+    function SubmitData() {
+        UIkit.modal.confirm('Are you sure to Submit this?', function () {
+                $.post("/Admin/UserManagement/AddUpdateUserInfo", $("#InputForm").serialize(), function (data) {
+                    if (data.Success) {
+                        UIkit.modal.alert(data.Message);
+                        UIkit.modal("#myModal").hide();
+                        GetSearchResult();
+                    }
+                    else {
+                        UIkit.modal.alert(data.Message);
+                    }
+                });
+        });
+    }
+
+    function DeleteData(elem) {
+        var errorMsg = '';
+        UIkit.modal.confirm('Are you sure to Delete this?', function () {
+            $.post("/Admin/UserManagement/DeleteAdmUserInfoById", { ID: elem }, function (data) {
+                if (data.Success) {
+                    UIkit.modal.alert(data.Message);
+                    GetSearchResult();
+                }
+                else {
+                    UIkit.modal.alert(data.Message);
+                }
+            });
+
+        });
+        if (errorMsg.length) UIkit.modal.alert(errorMsg);
+    }
+</script>

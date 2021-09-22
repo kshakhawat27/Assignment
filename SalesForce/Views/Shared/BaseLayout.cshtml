@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SalesForce</title>
+
+    <link rel="icon" type="image/png" href="<%: Url.Content(" ~/Altair/assets/img/favicon-16x16.png")%>"
+    sizes="16x16" />
+    <link rel="icon" type="image/png" href="<%: Url.Content(" ~/Altair/assets/img/favicon-32x32.png")%>"
+    sizes="32x32" />
+    <link rel="stylesheet" href="<%: Url.Content(" ~/Altair/bower_components/kendo-ui/styles/kendo.common-material.min.css")%>" />
+    <link rel="stylesheet" href="<%: Url.Content(" ~/Altair/bower_components/kendo-ui/styles/kendo.material.min.css")%>"
+    id="kendoCSS" />
+    <link rel="stylesheet" href="<%: Url.Content(" ~/Altair/bower_components/uikit/css/uikit.almost-flat.min.css")%>"
+    media="all" />
+    <link rel="stylesheet" href="<%: Url.Content(" ~/Altair/assets/icons/flags/flags.min.css")%>"
+    media="all" />
+    <link rel="stylesheet" href="<%: Url.Content(" ~/Altair/assets/css/style_switcher.min.css")%>"
+    media="all" />
+    <link rel="stylesheet" href="<%: Url.Content(" ~/Altair/assets/css/main.min.css")%>"
+    media="all" />
+    <link rel="stylesheet" href="<%: Url.Content(" ~/Altair/assets/css/themes/themes_combined.min.css")%>"
+    media="all" />
+    <link rel="stylesheet" href="<%: Url.Content(" ~/Altair/bower_components/chartist/dist/chartist.min.css")%>" />
+
+</head>
+<body class=" sidebar_main_open sidebar_main_swipe">
+    @Html.Partial("~/Views/Shared/BaseControler.cshtml")
+
+    <div id="page_content">
+        <div id="page_content_inner">
+
+            <div class="md-card">
+                <div class="md-card-content">
+                    <div class="uk-grid" data-uk-grid-margin>
+                        <div class="uk-width-1-1" id="dvmns">
+
+                            @RenderBody()
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+</body>
+</html>

@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Country";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model  SalesForce.Domain.Model.Inventory.VatCountryinfoEntity
+
+<form id="InputForm" action="">
+    <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-1 uk-container-center" id="tb_Container">
+        </div>
+    </div>
+
+    <div class="md-fab-wrapper">
+        <span class="md-fab md-fab-accent" id="note_add" onclick="OpenPopupModel(0);"><i class="material-icons">add</i> </span>
+    </div>
+    <div class="uk-modal" id="myModal">
+        <div class="uk-modal-dialog uk-modal-body" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            @Html.HiddenFor(m => m.Id)
+            <div class="uk-modal-header">
+                <h3 class="uk-modal-title" id="modalTitle"></h3>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Country Name<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Countryname, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>Country Name(Bangla)<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Banglaname, new { @class = "md-input label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>IsForeign<span class="uk-text-danger"> *</span></label>
+                    @Html.DropDownListFor(m => m.Isforeign, (List<SelectListItem>)ViewData["IsForeignList"], new { @class = "md-input md-input-success label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <label>IsActive<span class="uk-text-danger"> *</span></label>
+                    @Html.DropDownListFor(m => m.Isactive, (List<SelectListItem>)ViewData["IsActiveList"], new { @class = "md-input md-input-success label-fixed" })
+                </div>
+            </div>
+
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" class="md-btn md-btn-mini md-btn-success" id="submitBtn" onclick="SubmitData();">Create</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+<!--  forms advanced functions -->
+<script type="text/javascript" src="@Url.Content(" ~/Altair/assets/js/pages/forms_advanced.min.js")"></script>
+<!-- datatables -->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+<!-- datatables buttons-->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/dataTables.buttons.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/buttons.uikit.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/jszip/dist/jszip.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/pdfmake.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/vfs_fonts.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.colVis.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.html5.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.print.js")"></script>
+<!-- datatables custom integration -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/datatables.uikit.js")"></script>
+<!--  datatables functions -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/pages/plugins_datatables.js")"></script>
+
+
+<script type="text/javascript">
+
+    function OpenPopupModel(elem) {
+        if (elem === 0) {
+            $("#Countryname").val("");
+            $("#Banglaname").val("");
+            $("#Isactive").val("1");
+            $("#Isforeign").val("0");
+
+            $("#Id").val("0");
+            $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-success").text("Create");
+            $("#modalTitle").text("Create Country");
+        }
+        else {
+            $.post("/Admin/Settings/GetSingleCountryById?Id=" + elem, function (data) {
+                $("#Countryname").val(data.Countryname);
+                $("#Banglaname").val(data.Banglaname);
+                $("#Isforeign").val(data.Isforeign);
+                $("#Isactive").val(data.Isactive);
+                $("#Id").val(data.Id);
+
+                $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-danger").text("Update");
+                $("#modalTitle").text("Update Company");
+            });
+        }
+        UIkit.modal("#myModal", { bgclose: false, keyboard: false }).show();
+    }
+
+
+    GetSearchResult();
+    function GetSearchResult() {
+        $.post("/Admin/Settings/GetCountryList", function (data) {
+            $("#tb_Container").html(data);
+            altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 380);
+        });
+    }
+
+    function SubmitData() {
+        var errorMsg = '';
+        UIkit.modal.confirm('Are you sure to Submit this?', function () {
+            if (!$("#Countryname").val()) {
+                errorMsg = "Sorry, Please Check Required Fields.";
+                UIkit.modal.alert(errorMsg);
+            }
+            else {
+                $.post("/Admin/Settings/AddUpdateCountryInfo", $("#InputForm").serialize(), function (data) {
+                    if (data.Success) {
+                        UIkit.modal.alert(data.Msg);
+                        UIkit.modal("#myModal").hide();
+                        GetSearchResult();
+                    }
+                    else {
+                        UIkit.modal.alert(data.Msg);
+                    }
+                });
+            }
+        });
+    }
+</script>

@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "GoodsTransferRegister";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model SalesForce.Domain.Model.Inventory.InvStocktransfermasterEntity
+
+<form id="InputForm" action="">
+    <div class="md-card md-card-content md-card-primary">
+        <div class="uk-grid" data-uk-grid-margin>
+            <div class="uk-width-medium-1-6">
+                <label>
+                    Start Date
+                </label>
+                @Html.TextBoxFor(m => m.StartDate, new { @class = "md-input label-fixed", @readonly = "readonly", @data_uk_datepicker = "{format:'DD/MM/YYYY'}" })
+            </div>
+            <div class="uk-width-medium-1-6">
+                <label>
+                    End Date
+                </label>
+                @Html.TextBoxFor(m => m.EndDate, new { @class = "md-input label-fixed", @readonly = "readonly", @data_uk_datepicker = "{format:'DD/MM/YYYY'}" })
+            </div>
+
+            <div class="uk-width-medium-1-6">
+                <a class="md-btn md-btn-mini md-btn-primary" href="javascript:GetSearchResult();" style="margin-top: 20px">Search</a>
+                <i class="uk-icon-spinner uk-icon-medium uk-icon-spin uk-text-warning loading" style="display:none;"></i>
+            </div>
+        </div>
+
+    </div>
+    <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-1 uk-container-center" id="tb_Container">
+        </div>
+    </div>
+    <a class="md-btn md-btn-mini md-btn-success" href="javascript:GoToReportView();" style="margin-top: 20px">PRINT</a>
+</form>
+
+<style type="text/css">
+    .material-icons {
+        cursor: pointer;
+    }
+</style>
+
+<!--  forms advanced functions -->
+<script type="text/javascript" src="@Url.Content(" ~/Altair/assets/js/pages/forms_advanced.min.js")"></script>
+<!-- datatables -->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+<!-- datatables buttons-->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/dataTables.buttons.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/buttons.uikit.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/jszip/dist/jszip.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/pdfmake.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/vfs_fonts.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.colVis.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.html5.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.print.js")"></script>
+<!-- datatables custom integration -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/datatables.uikit.js")"></script>
+<!--  datatables functions -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/pages/plugins_datatables.js")"></script>
+
+
+<script type="text/javascript">
+    GetSearchResult();
+    function GetSearchResult() {
+        $.post("/Admin/MushakReports/GetGoodsTransferRecordListForRegister?StartDate=" + $("#StartDate").val() + "&EndDate=" + $("#EndDate").val(), function (data) {
+            $("#tb_Container").html(data);
+            altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 380);
+        });
+    }
+
+    function GoToReportView() {
+        window.open("/Admin/MushakReports/Mushak_6_5A_Report?StartDate=" + $("#StartDate").val() + "&EndDate=" + $("#EndDate").val(), '_blank');
+    }
+</script>
+
+
+

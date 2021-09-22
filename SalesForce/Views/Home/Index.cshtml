@@ -1,0 +1,328 @@
+﻿@{
+    ViewBag.Title = "Pakiza VatTax";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model  SalesForce.Domain.Admin.InvSuupplierEntity
+
+<div id="dvDashBoard" style="display:none">
+
+
+    <div class="uk-grid uk-grid-small" data-uk-grid-margin>
+        <div class="uk-width-medium-8-10" style="display: none;">
+
+            <!-- Parameters ---------------------------------->
+            <div class="md-card md-card-content md-card-primary">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "InputForm" }))
+                {
+                    <div class="uk-grid" data-uk-grid-margin>
+                        @*<div class="uk-width-medium-1-4">
+                            <label for="uk_dp_start">Start Date</label>
+                            @Html.TextBoxFor(m => m.SrcStartDate, new { @class = "md-input label-fixed", @id = "uk_dp_start", @readonly = "readonly", @data_uk_datepicker = "{format:'DD/MM/YYYY'}" })
+                        </div>
+                        <div class="uk-width-medium-1-4">
+                            <label for="uk_dp_end">End Date</label>
+                            @Html.TextBoxFor(m => m.SrcEndDate, new { @class = "md-input label-fixed", @id = "uk_dp_end", @readonly = "readonly", @data_uk_datepicker = "{format:'DD/MM/YYYY'}" })
+                        </div>*@
+                        <div class="uk-width-medium-1-4">
+                            <label>Month</label>
+                            @Html.DropDownListFor(m => m.SrcMonth, (List<SelectListItem>)ViewBag.SrcMonthList, new { @class = "md-input label-fixed" })
+                        </div>
+                        <div class="uk-width-medium-1-4">
+                            <label>Year</label>
+                            @Html.DropDownListFor(m => m.SrcYear, (List<SelectListItem>)ViewBag.SrcYearList, new { @class = "md-input label-fixed" })
+                        </div>
+                        <div class="uk-width-medium-1-4">
+                            <input type="submit" value="Submit" title="Submit Form" class="md-btn md-btn-flat md-btn-mini md-btn-primary" style="margin-top:20px;" />
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- Parameters ---------------------------------->
+            <!-- statistics (small charts) ---------------------------------->
+            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+                <div class="GoToPage" id="mPurchase" style="cursor:pointer">
+                    <div class="md-card">
+                        <div class="md-card-content">
+                            <div class="uk-float-right uk-margin-small-right"><img src="Images/IconsMIS/icon_BDT.png" alt="PCS" height="20" width="20" /></div>
+                            <span class="uk-text-muted uk-text-small">Purchase</span>
+                            <h2 class="uk-margin-remove">@{ Write(Model.ToptabPurchase); }</h2>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="GoToPage" id="mPayment" style="cursor:pointer">
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-small-right"> <img src="Images/IconsMIS/icon_BDT.png" alt="PCS" height="20" width="20" /> </div>
+                                <span class="uk-text-muted uk-text-small">Payment</span>
+                                <h2 class="uk-margin-remove">
+                                    @{ Write(Model.ToptabPayment); }
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="GoToPage" id="mPayable" style="cursor:pointer">
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-small-right"> <img src="Images/IconsMIS/icon_BDT.png" alt="PCS" height="20" width="20" /> </div>
+                                <span class="uk-text-muted uk-text-small"> Payable</span>
+                                <h2 class="uk-margin-remove">
+                                    @{ Write(Model.ToptabPayable); }
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="GoToPage" id="mTotalPayable" style="cursor:pointer">
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-small-right"> <img src="Images/IconsMIS/icon_BDT.png" alt="PCS" height="20" width="20" /> </div>
+                                <span class="uk-text-muted uk-text-small">Total Payable</span>
+                                <h2 class="uk-margin-remove">
+                                    @{ Write(Model.ToptabTotalPayable); }
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-grid uk-grid-width-large-1-4 uk-grid-width-medium-1-2 uk-grid-medium uk-sortable sortable-handler hierarchical_show" data-uk-sortable data-uk-grid-margin>
+                <div>
+                    <div class="GoToPage" id="mSell" style="cursor:pointer">
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-small-right"> <img src="Images/IconsMIS/icon_BDT.png" alt="PCS" height="20" width="20" /> </div>
+                                <span class="uk-text-muted uk-text-small">Sell</span>
+                                <h2 class="uk-margin-remove">
+                                    @{ Write(Model.ToptabSellNoVatTax); }
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="GoToPage" id="mCollection" style="cursor:pointer">
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-small-right"> <img src="Images/IconsMIS/icon_BDT.png" alt="PCS" height="20" width="20" /> </div>
+                                <span class="uk-text-muted uk-text-small">Collection</span>
+                                <h2 class="uk-margin-remove">
+                                    @{ Write(Model.ToptabCollection); }
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="GoToPage" id="mReceivable" style="cursor:pointer">
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-small-right"> <img src="Images/IconsMIS/icon_BDT.png" alt="PCS" height="20" width="20" /> </div>
+                                <span class="uk-text-muted uk-text-small"> Receivable</span>
+                                <h2 class="uk-margin-remove">
+                                    @{ Write(Model.ToptabReceivable); }
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="GoToPage" id="mTotalReceivable" style="cursor:pointer">
+                        <div class="md-card">
+                            <div class="md-card-content">
+                                <div class="uk-float-right uk-margin-small-right"> <img src="Images/IconsMIS/icon_BDT.png" alt="PCS" height="20" width="20" /> </div>
+                                <span class="uk-text-muted uk-text-small">Total Receivable</span>
+                                <h2 class="uk-margin-remove">
+                                    @{ Write(Model.ToptabTotalReceivable); }
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-medium-1-1">
+                    <div class="md-card">
+                        <div class="md-card-toolbar">
+                            <div class="md-card-toolbar-actions">
+                                <i title="View Table" class="md-icon material-icons md-card-fullscreen-hide toolbar_fixed viewTable" data-uk-modal="{target:'#modal_full'}">&#xE060;</i>
+                                <i title="Full Screen" class="md-icon material-icons md-card-fullscreen-activate toolbar_fixed">&#xE5D0;</i>
+                            </div>
+                            <h3 class="md-card-toolbar-heading-text">
+                                Purchase & Sell Chart @Html.Raw(Model.SrcYear)
+                            </h3>
+                        </div>
+                        <div class="md-card-content">
+                            <div id="c3_chart_spline_Production" class="c3chart" style="width:100%; height:400px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-modal uk-modal-card-fullscreen" id="modal_full">
+                <div class="uk-modal-dialog uk-modal-dialog-blank">
+                    <div class="md-card uk-height-viewport">
+                        <div class="md-card-toolbar">
+                            <span class="md-icon material-icons uk-modal-close">&#xE5C4;</span>
+                            <h3 class="md-card-toolbar-heading-text">
+                                Purchase & Sell Report @Html.Raw(Model.SrcYear)
+                            </h3>
+                        </div>
+                        <div class="md-card-content" style="width:100%;">
+                            @Html.Raw(Model.DtTableBody)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="uk-width-medium-2-10" style="display: none;">
+            <div class="md-card md-card-primary">
+                <div class="md-card-toolbar">
+                    <h3 class="md-card-toolbar-heading-text" style="font-size: 17px;">
+                        Notifications
+                    </h3>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+        @if (Model.DashboardShow)
+        {
+            <script>
+                var divDB = document.getElementById('dvDashBoard');
+                divDB.style.display = 'none';
+            </script>
+
+
+        }
+        @if (!Model.DashboardFirst)
+        {
+            <script>$('#InputForm').submit();</script>
+        }
+
+        <!-- metrics graphics (charts) -->
+        <link rel="stylesheet" type="text/css" href="/Altair/bower_components/metrics-graphics/dist/metricsgraphics.css" />
+        <!-- c3.js (charts) -->
+        <link rel="stylesheet" type="text/css" href="/Altair/bower_components/c3js-chart/c3.min.css" />
+        <!-- chartist -->
+        <link rel="stylesheet" type="text/css" href="/Altair/bower_components/chartist/dist/chartist.min.css" />
+
+        <!-- page specific plugins -->
+        <!-- d3 -->
+        <script type="text/javascript" src="/Altair/bower_components/d3/d3.min.js"></script>
+        <!-- metrics graphics (charts) -->
+        <script type="text/javascript" src="/Altair/bower_components/metrics-graphics/dist/metricsgraphics.min.js"></script>
+        <!-- c3.js (charts) -->
+        <script type="text/javascript" src="/Altair/bower_components/c3js-chart/c3.min.js"></script>
+        <!-- chartist -->
+        <script type="text/javascript" src="/Altair/bower_components/chartist/dist/chartist.min.js"></script>
+
+        <!--  charts functions -->
+        <script type="text/javascript" src="/Altair/assets/js/pages/plugins_charts.min.js"></script>
+
+        <!-- ionrangeslider -->
+        <script type="text/javascript" src="/Altair/bower_components/ion.rangeslider/js/ion.rangeSlider.min.js"></script>
+        <!--  forms advanced functions -->
+        <script type="text/javascript" src="/Altair/assets/js/pages/forms_advanced.min.js"></script>
+
+        <!-- datatables -->
+        <script type="text/javascript" src="/Altair/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+        <!-- datatables buttons-->
+        <script type="text/javascript" src="/Altair/bower_components/datatables-buttons/js/dataTables.buttons.js"></script>
+        <script type="text/javascript" src="/Altair/assets/js/custom/datatables/buttons.uikit.js"></script>
+        <script type="text/javascript" src="/Altair/bower_components/jszip/dist/jszip.min.js"></script>
+        <script type="text/javascript" src="/Altair/bower_components/pdfmake/build/pdfmake.min.js"></script>
+        <script type="text/javascript" src="/Altair/bower_components/pdfmake/build/vfs_fonts.js"></script>
+        <script type="text/javascript" src="/Altair/bower_components/datatables-buttons/js/buttons.colVis.js"></script>
+        <script type="text/javascript" src="/Altair/bower_components/datatables-buttons/js/buttons.html5.js"></script>
+        <script type="text/javascript" src="/Altair/bower_components/datatables-buttons/js/buttons.print.js"></script>
+        <!-- datatables custom integration -->
+        <script type="text/javascript" src="/Altair/assets/js/custom/datatables/datatables.uikit.js"></script>
+        <!--  datatables functions -->
+        <script type="text/javascript" src="/Altair/assets/js/pages/plugins_datatables.js"></script>
+
+        <script type="text/javascript">
+            $(".GoToPage").click(function () {
+                var tabID = $(this).prop("id");
+                if (tabID == "mReceivable") {
+                    window.open("/Operations/Report/ARChallanWise", '_blank');
+                }
+                else if (tabID == "mTotalReceivable") {
+                    window.open("/Operations/Report/ARSummaryWise", '_blank');
+                }
+                else if (tabID == "mPayable") {
+                    window.open("/Inventory/Report/APChallanWise", '_blank');
+                }
+                else if (tabID == "mTotalPayable") {
+                    window.open("/Inventory/Report/APSummaryWise", '_blank');
+                }
+                else if (tabID == "mPayment") {
+                    window.open("/Operations/Report/DailyVendorPaymentDetailsList", '_blank');
+                }
+                else if (tabID == "mCollection") {
+                    window.open("/Operations/Report/DailyCustomerPaymentDetailsList", '_blank');
+                }
+                else if (tabID == "mSell") {
+                    window.open("/Operations/Report/MonthlySales", '_blank');
+                }
+                else if (tabID == "mPurchase") {
+                    window.open("/Operations/Report/MonthlyPurchase", '_blank');
+                }
+
+                //window.open("/Operations/LCMasterTracking/SetLCData?Id=" + id, '_blank');
+
+                //if (tabID == "DefHoli") window.open('/HRM/Roster/DefaultHoliday', '_blank');
+                //else window.open('/HRM/Roster/GovtHoliday', '_self');
+            });
+
+        </script>
+
+        <script type="text/javascript">
+
+    $(".viewTable").mouseout(function () {
+        $('#rk_dtInfo2').DataTable().order([0, 'asc']).draw();
+    });
+
+    altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 400);
+
+    var c3chart_spline_id = '#c3_chart_spline_Production';
+    if ($(c3chart_spline_id).length) {
+        var c3chart_spline = c3.generate({
+            bindto: c3chart_spline_id,
+            data: {
+                json: [
+                        @Html.Raw(Model.ChartValue)
+                    ],
+        keys: {
+            x: 'label', // it's possible to specify 'x' when category axis
+                value: [ @Html.Raw(Model.ChartLabel) ]
+        }
+    },
+    axis: {
+        x: {
+            type: 'category',
+                tick: {
+                rotate: 75,
+                    multiline: false
+            },
+            height: 100
+        }
+    },
+    color: {
+        pattern: ['#d62728', '#FB8C00', '#2ca02c', '#5E35B1', '#8c564b', '#9467bd', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
+    }
+            });
+
+    $window.on('debouncedresize', function () {
+        c3chart_spline.resize();
+    });
+}
+        </script>

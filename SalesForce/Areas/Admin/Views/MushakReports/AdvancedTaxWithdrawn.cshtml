@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Mushak 4.1 : Advance Tax Withdrawn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<form id="InputForm" action="">
+    <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-1 uk-container-center" id="tb_Container">
+        </div>
+    </div>
+</form>
+
+<style type="text/css">
+    .material-icons {
+        cursor: pointer;
+    }
+</style>
+
+<!--  forms advanced functions -->
+<script type="text/javascript" src="@Url.Content(" ~/Altair/assets/js/pages/forms_advanced.min.js")"></script>
+<!-- datatables -->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+<!-- datatables buttons-->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/dataTables.buttons.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/buttons.uikit.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/jszip/dist/jszip.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/pdfmake.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/vfs_fonts.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.colVis.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.html5.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.print.js")"></script>
+<!-- datatables custom integration -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/datatables.uikit.js")"></script>
+<!--  datatables functions -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/pages/plugins_datatables.js")"></script>
+
+
+<script type="text/javascript">
+
+    GetSearchResult();
+
+    function GetSearchResult() {
+        //$.post("/Admin/MushakReports/GetVATReturnNoteList", function (data) {
+        //    $("#tb_Container").html(data);
+        //    altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 380);
+        //});
+        var $tHead = '<tr><th style="width:10px"></th><th>Import Ref. #</th><th>Import Date</th><th>LC No</th><th>LC Date</th><th>BL No.</th><th>BL Date</th><th>Country</th><th>AT Pay Date</th><th>RO No.</th><th>RO Date</th><th>Item Name</th><th>AT Amt</th><th>Return</th></tr>',
+            $row = '<div class="rk_dtButton2"></div><table id="rk_dtInfo2" class="uk-table uk-table-hover uk-table-condensed" cellspacing="0" width="100%">'
+                + '<thead class="md-bg-blue-grey-100">' + $tHead + '</thead><tfoot style="display:none;">' + $tHead + '</tfoot><tbody>';
+
+        $row += "<tr>"
+            //+ "<td>" + "<i onclick=\"GoToReportView();\" class='md-24 material-icons md-color-green-500' title='View Report - Mushak 4.1'>&#XE85D;</i>" + "</td>"
+            //+ "<td>19-IP-00001</td>"
+            //+ "<td>18 Nov 19</td>"
+            //+ "<td>LC-001</td>"
+            //+ "<td>03 Nov 19</td>"
+            //+ "<td>BL-0001</td>"
+            //+ "<td>10 Nov 19</td>"
+            //+ "<td>Bangladesh</td>"
+            //+ "<td>18 Nov 19</td>"
+            //+ "<td> </td>"
+            //+ "<td> </td>"
+            //+ "<td>Monitor HS:293434430</td>"
+            //+ "<td>233,328.75</td>"
+            //+ "<td>Yes</td>"
+            + "</tr>";
+
+        $row += '</tbody></table>';
+        //"<i onclick=\"GoToInvoice('" + dr["Id"] + "');\" class='md-24 material-icons md-color-green-500 hidden-print' title='View Invoice'>&#XE8A0;</i>"
+        $("#tb_Container").html($row);
+        altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 380);
+    }
+
+    function GoToReportView() {
+        window.open("/Admin/MushakReports/Mushak_4_1Report/", '_blank');
+    }
+</script>

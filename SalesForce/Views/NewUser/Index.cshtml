@@ -1,0 +1,140 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no" />
+    <link rel="icon" type="image/png" href="../../Altair/assets/img/favicon-16x16.png"
+          sizes="16x16">
+    <link rel="icon" type="image/png" href="../../Altair/assets/img/favicon-32x32.png"
+          sizes="32x32">
+    <title> gSmartHR </title>
+    @*<title>Business Assist-Login</title>*@
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500' rel='stylesheet'
+          type='text/css'>
+    <!-- uikit -->
+    <link rel="stylesheet" href="../../Altair/bower_components/uikit/css/uikit.almost-flat.min.css" />
+    <!-- altair admin login page -->
+    <link rel="stylesheet" href="../../Altair/assets/css/login_page.min.css" />
+
+</head>
+
+<h2 style="text-align:center"> Register if you not registered yet</h2>
+
+<script src="~/Scripts/jquery-1.7.2.min.js"></script>
+
+<form>
+    <div class="uk-form-row" style="text-align:center">
+        <label style="top: -18px">
+            User Name
+        </label>
+        <input type="text" class="form-control txtOnly" id="UserName" placeholder="Full Name">
+    </div>
+    <div class="uk-form-row" style="text-align:center">
+        <label style="top: -18px">
+            Employee ID
+        </label>
+        <input type="text" class="form-control txtOnly" id="UserId" placeholder="Full Name">
+    </div>
+    <div class="uk-form-row" style="text-align:center">
+        <label style="top: -18px">
+            Employee Type
+        </label>
+        <select name="Type" id="RollId">
+            <option value="1">Stuff</option>
+            <option value="2">Admin</option>
+        </select>
+    </div>
+    <div class="uk-form-row" style="text-align:center">
+        <label style="top: -18px">
+            Please Select your Image
+        </label>
+        <input type="file" class="form-control image" id="ImagePath" name="image" multiple="multiple" />
+        <p style="color:black;font-size:11px;"> Photo Must be in Passport(PP) Size. Max Upload Size 256 KB. Upload Only JPG/PNG/JPEG Extension File.</p>
+    </div>
+    <div class="uk-form-row" style="text-align:center">
+        <label  style="top: -18px">
+            Password
+        </label>
+        <input type="password" class="form-control txtOnly" id="UserPassword" placeholder="Full Name">
+    </div>
+    <div class="uk-margin-medium-top">
+        <input type="submit" value="Submit" title="Sign In" class="md-btn md-btn-primary md-btn-block md-btn-large" onclick="SaveUserInfo();" />
+    </div>
+</form>
+
+
+
+<script>
+
+    function SaveUserInfo() {
+
+        var UserId = $("#UserId").val();
+        var UserName = $("#UserName").val();
+        var RollId = $("#RollId").val();
+        var UserPassword = $("#UserPassword").val();
+
+        var formData = new FormData();
+        var totalFiles = document.getElementById("ImagePath").files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = document.getElementById("ImagePath").files[i];
+            formData.append("ImagePath", file);
+        }
+        formData.append("UserId", UserId);
+        formData.append("UserName", UserName);
+        formData.append("RollId", RollId);
+        formData.append("UserPassword", UserPassword);
+
+        $.ajax({
+            type: "POST",
+            url: "/NewUser/UserInfo",
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.success == true) {
+                    window.location.href = "/Home/Login"
+                    alert("Data Save Successfully..", "success");
+                }
+                else {
+                    alert("Data Save Failed..", "error");
+                }
+                //ClearForm();
+            }
+        });
+    }
+    function ClearForm() {
+        $("#hdValue").val("");
+        $(".number").val("");
+        $(".txtOnly").val("");
+        $(".txt").val("");
+        $(".image").val("");
+    }
+
+
+</script>
+
+
+
+
+
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+    </div>
+</body>
+</html>

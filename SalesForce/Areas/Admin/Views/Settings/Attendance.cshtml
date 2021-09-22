@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Attendance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="text-align:center; color:cornflowerblue">Attendance</h2>
+
+@model  SalesForce.Domain.Admin.AttendanceModel
+
+<form id="InputForm" action="">
+
+    <p style="text-align:center;">
+ <button type="button" class="md-btn md-btn-flat md-btn-success" id="submitBtn" onclick="GiveAttendance();"> Click here for your Start your Job</button>
+
+    </p>
+
+        <input type="hidden" id="Status" />
+
+
+</form>
+
+<!--  forms advanced functions -->
+<script type="text/javascript" src="@Url.Content(" ~/Altair/assets/js/pages/forms_advanced.min.js")"></script>
+<!-- datatables -->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+<!-- datatables buttons-->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/dataTables.buttons.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/buttons.uikit.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/jszip/dist/jszip.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/pdfmake.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/vfs_fonts.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.colVis.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.html5.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.print.js")"></script>
+<!-- datatables custom integration -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/datatables.uikit.js")"></script>
+<!--  datatables functions -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/pages/plugins_datatables.js")"></script>
+
+<script type="text/javascript">
+
+
+    function GiveAttendance() {
+    
+        var Status = $("#Status").val();
+            $.post("/Admin/Settings/AddUpdateUserAttendace?Status=" + Status, function (data) {
+                $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-danger").text("Click here for your End your Job");
+                $("#Status").val("Present");
+                UIkit.modal.alert(data.Message);
+                
+            });
+       
+    }
+
+
+
+</script>
+
+<script type="text/javascript">
+    function SubmitData() {
+        var errorMsg = '';
+        UIkit.modal.confirm('Are you sure to Submit this?', function () {
+            if ($("#Suppliername").val() == "") {
+                errorMsg = "Sorry, Please Check Required Fields.";
+                UIkit.modal.alert(errorMsg);
+            }
+            else {
+                $.post("/Admin/UserManagement/AddUpdateUserInfo", $("#InputForm").serialize(), function (data) {
+                    if (data.Success) {
+                        UIkit.modal.alert(data.Message);
+                        UIkit.modal("#myModal").hide();
+                        GetSearchResult();
+                    }
+                    else {
+                        UIkit.modal.alert(data.Message);
+                    }
+                });
+            }
+        });
+    }
+
+    function DeleteData(elem) {
+        var errorMsg = '';
+        UIkit.modal.confirm('Are you sure to Delete this?', function () {
+            $.post("/Admin/UserManagement/DeleteAdmUserInfoById", { ID: elem }, function (data) {
+                if (data.Success) {
+                    UIkit.modal.alert(data.Message);
+                    GetSearchResult();
+                }
+                else {
+                    UIkit.modal.alert(data.Message);
+                }
+            });
+
+        });
+        if (errorMsg.length) UIkit.modal.alert(errorMsg);
+    }
+</script>
+

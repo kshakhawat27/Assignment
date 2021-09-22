@@ -1,0 +1,226 @@
+﻿@{
+    Layout = null;
+}
+
+<body class=" sidebar_main_open sidebar_main_swipe">
+    @Html.Hidden("cPageName")
+    <!-- main header -->
+    <header id="header_main">
+
+        <div class="header_main_content">
+
+            <nav class="uk-navbar">
+
+                <!-- main sidebar switch -->
+                @*<a href="#" id="sidebar_main_toggle" class="sSwitch sSwitch_left">
+                    <span class="sSwitchIcon"></span>
+
+                </a>*@
+                <a href="#" style="float:left;margin-top:12px">
+                    <span class="sSwitchIcon" style="color:White;font-size:18px">
+                        @*@Response.Write(ViewData["PageHeader"].ToString())*@
+                    </span>
+                </a>
+
+                <div class="uk-navbar-flip">
+                    <ul class="uk-navbar-nav user_actions">
+
+                       
+
+                        <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}" style="color:White; font-family:Segoe UI; font-size:small">
+                            @{ string uPhoto = "NoImage.jpg";
+                                if (Session["UserName"] != null)
+                                {
+                                    @Session["UserName"] <br />
+                                }
+                                if (Session["CurrentCompanyName"] != null)
+                                {
+                                    @Session["CurrentCompanyName"]
+                                }
+                                if (Session["UserId"] != null)
+                                {
+                                    @Session["UserId"]
+                                }
+                              
+                            }
+                        </li>
+                        <li data-uk-dropdown="{mode:'click',pos:'bottom-right'}">
+                            <a href="#" class="user_action_image"><img class="md-user-image" id="_imageUsers" src="/pDocx/uPhoto/@uPhoto" alt="" /></a>
+                            <div class="uk-dropdown uk-dropdown-small">
+                                <ul class="uk-nav js-uk-prevent">
+                                    <li><a href="/Account/ChangePassword">Change Password</a></li>
+                                    <li><a href="/Home/Login">Logout</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+    </header>
+    <!-- main header end -->
+    <!-- main sidebar -->
+    <aside id="sidebar_main">
+
+        <div class="sidebar_main_header">
+            <div class="sidebar_logo">
+                <a href="/Home" class="sSidebar_hide sidebar_logo_large" style="margin-top:3px">
+                    <img class="logo_regular" src="../../../Images/criptonlogo.png" alt="" width="150" />
+                </a>
+
+            </div>
+        </div>
+
+        <div class="menu_section">
+            <ul>
+                <li title="Dashboard">
+                    <a href="/Home">
+                        <span class="menu_icon"><i class="material-icons">&#xE871;</i></span>
+                        <span class="menu_title">Dashboard</span>
+                    </a>
+                </li>
+
+
+
+                @foreach (SalesForce.Models.FeatureName iSet in (List<SalesForce.Models.FeatureName>)Session["ERP_MainTab_List"])
+                {
+                    <li title=".">
+                        <a href="@iSet.FeatureURL" style="border:1px solid #f0f0f5;margin-right:8px">
+                            <span class="menu_icon"><i class="material-icons">&#xE8F1;</i></span>
+                            <span class="menu_title">
+                                @iSet.Name
+                            </span>
+                        </a>
+
+                        @if (Session["ERP_Dashboard"].ToString() == "0")
+
+                        {
+
+
+                        <ul>
+                            @foreach (SalesForce.Models.FeatureName iSetTab in (List<SalesForce.Models.FeatureName>)Session["ERP_SubTab_List"])
+                            {
+                                if (iSetTab.Id == iSet.Name)
+                                {
+                                    if (iSetTab.CurrentPageStatus == "1")
+                                    {
+
+                                <li class="act_item">
+
+                                   
+
+                                    <a style="padding:8px 0px 8px 60px" href="@iSetTab.FeatureURL" style="border:1px solid #f0f0f5;margin-right:8px">
+                                        <span class="menu_icon"><i class="material-icons">&#xE24D;</i></span>
+                                        <span class="menu_title">
+                                            @iSetTab.Name
+                                        </span>
+                                    </a>
+
+                                </li>
+
+                                    }
+                                    else
+                                    {
+
+                                <li>
+
+                                    <a style="padding:8px 0px 8px 60px" href="@iSetTab.FeatureURL" style="border:1px solid #f0f0f5;margin-right:8px">
+                                        <span class="menu_icon"><i class="material-icons">&#xE24D;</i></span>
+                                        <span class="menu_title">
+                                            @iSetTab.Name
+                                        </span>
+                                    </a>
+
+                                </li>
+
+                                    }
+                                }
+                            }
+
+                        </ul>
+
+                        }
+                        
+                    </li>
+                }
+
+
+            </ul>
+        </div>
+    </aside>
+    <!-- common functions -->
+    <script src='@Url.Content("~/Altair/assets/js/common.min.js")'></script>
+    <!-- uikit functions -->
+    <script src='@Url.Content("~/Altair/assets/js/uikit_custom.min.js")'></script>
+    <!-- altair common functions/helpers -->
+    <script src='@Url.Content("~/Altair/assets/js/altair_admin_common.min.js")'></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            GetEmployeeBasciData();
+        });
+
+        function GetEmployeeBasciData() {
+            var a = "";
+            $.post("/Home/GetUserImage", function (data) {
+                a = data.Ids;
+            });
+
+            if (a != null && a != "") {
+                document.getElementById('imageUsers').setAttribute('src', '../../../../Photo/EmpPicture/' + a);
+            }
+            else {
+                document.getElementById('imageUsers').setAttribute('src', '../../../../Photo/EmpPicture/634539550621087758_NO IMAGE.jpg');
+            }
+        }
+        function OpenPopupModel(elem) {
+            if (elem == 0) {
+                $("#UserId").val("");
+                $("#UserPassword").val("");
+                $("#UserName").val("");
+                $("#Dob").val("");
+                $("#Gender").val("");
+                $("#JoiningDate").val("");
+                $("#BranchId").val("");
+
+                $("#UserDept").val("");
+                $("#UserDesig").val("");
+                $("#UserTLeader").val("");
+                $("#isManager").val("");
+                $("#isHod").val("");
+                $("#isPMG").val("");
+                $("#ContactNo").val("");
+                $("#Email").val("");
+                $("#Id").val("0");
+                $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-success").text("Create");
+                $("#modalTitle").text("Create User");
+            }
+            else {
+                $.post("/Admin/UserManagement/GetSingleAdmUserRecordById?Id=" + elem, function (data) {
+                    $("#UserId").val(data.UserId);
+                    $("#UserPassword").val(data.UserPassword);
+                    $("#UserName").val(data.UserName);
+                    $("#Dob").val(data.Dob);
+                    $("#Gender").val(data.Gender);
+                    $("#JoiningDate").val(data.JoiningDate);
+                    $("#ContactNo").val(data.ContactNo);
+
+                    $("#UserDept").val(data.UserDept);
+                    $("#UserDesig").val(data.UserDesig);
+                    $("#UserTLeader").val(data.UserTLeader);
+
+                    $("#isManager").val(data.isManager);
+                    $("#isHod").val(data.isHod);
+                    $("#isPMG").val(data.isPMG);
+
+                    $("#Email").val(data.Email);
+                    $("#BranchId").val(data.BranchId);
+                    $("#Id").val(data.Id);
+                    $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-danger").text("Update");
+                    $("#modalTitle").text("Update User");
+                });
+            }
+            UIkit.modal("#myModal").show();
+        }
+    </script>
+</body>

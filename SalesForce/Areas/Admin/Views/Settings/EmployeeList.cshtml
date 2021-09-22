@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "EmployeeList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EmployeeList</h2>
+
+<h2>Index</h2>
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+
+<script src="~/Content/jQuery/jQuery-2.1.4.min.js"></script>
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            Blank page
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Examples</a></li>
+            <li class="breadcrumb-item active">Blank page</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="box-header with-border" style="display:none;">
+                <h3 class="box-title">Title</h3>
+                <ul class="box-controls pull-right">
+                    <li><a class="box-btn-slide" href="#"></a></li>
+                    <li><a class="box-btn-fullscreen" href="#"></a></li>
+                </ul>
+            </div>
+            <div class="box-body">
+                <div id="tblCG01">
+                </div>
+                <script type="text/x-kendo-template" id="template">
+                    <div class="tabstrip">
+                        <ul>
+                            <li class="k-state-active">
+                                Details
+                            </li>
+                            <li>
+                                Details
+                            </li>
+                        </ul>
+                        <div>
+                            <div class='employee-details'>
+                                <div class="">
+                                    <table class="table table-bordered table-condensed">
+                                        <tr>
+                                            <td><label>gyughigh :</label></td>
+                                            <td><label>Infomail</label></td>
+                                        </tr>
+                                        <tr class="tdNames">
+                                            <td>#= InfoName #</td>
+                                            <td>#= Infomail #</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class='employee-details'>
+                                <div class="">
+                                    <table class="table table-bordered table-condensed">
+                                        <tr>
+                                            <td><label>gyughigh :</label></td>
+                                            <td><label>Infomail</label></td>
+                                        </tr>
+                                        <tr class="tdNames">
+                                            <td>#= InfoName #</td>
+                                            <td>#= Infomail #</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </script>
+            </div>
+            <div class="box-footer hidden">
+                Footer
+            </div>
+        </div>
+    </section>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@*@RenderSection("scripts", required: false)*@
+@Html.Partial("~/Views/Shared/_KendoCssScripts.cshtml")
+<script src="~/CustomContent/JS/Common.js"></script>
+<script src="~/Custom Content/JS/CG01.js"></script>
+

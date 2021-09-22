@@ -1,0 +1,190 @@
+﻿body
+{
+	background-color:#E8E8E8;
+    background-position:center;
+    background-position:top;
+	background-repeat:repeat-x;
+	margin: 0;
+	padding: 0;
+	cursor: default;
+	position:relative;
+    font-family: Verdana,helvetica,arial,sans-serif, Tahoma;
+    font-size: .80em;
+    font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
+}
+
+#middle1
+{
+    position: relative;
+    width: 1040px;
+    height:25px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:150px;
+}
+.LoginTopPanel
+{
+    height:90px;
+    width:150px;
+}
+
+#logo
+{
+    background-image:URL('/Content/CustomTheme/Images/SignIn/Blue.png');
+    width:150px;
+    height:90px;
+    margin-top:30px;
+    position:absolute;
+    background-repeat:no-repeat;
+}
+
+#ltile 
+{   
+   
+    height:90px;
+    width:400px;
+    position:absolute;
+    margin-left:85px;
+}    
+
+.LoginMainPanel
+{
+    background-image: URL('/Content/CustomTheme/Images/loginpanel.png');
+    background-repeat:no-repeat;
+    height:360px;
+    width:400px;
+}
+.LoginFooterPanel
+{
+    color:White;
+    height:295px;
+    width:604px;
+    margin:  auto auto;
+    text-align:right;
+    margin-left:0px;
+}
+.LoginButton
+{
+    background-image: URL('/Content/images/LoginButton.png');
+    background-repeat:no-repeat;
+    height:40px;
+    width:80px;
+    margin:  auto auto;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, p, blockquote, table, tr, th, td, input, label, textarea, button, select
+{
+    margin: 0px auto;
+    padding: 0px;
+}
+
+.clear
+{
+   
+    clear: both;
+    
+}
+
+
+input[type="text"], 
+input[type="password"] 
+{
+    
+    border: 1px solid #ccc;
+    padding: 2px;
+    font-size: 1.2em;
+    color: #444;
+    width: 200px;
+    
+}
+
+.page_single_column input[type="text"], 
+.page_single_column  input[type="password"] 
+{
+    min-width:250px!Important;
+}
+
+
+
+	.button {
+   border-top: 1px solid #ffffff;
+   background: #ffffff;
+   background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ffffff));
+   background: -webkit-linear-gradient(top, #ffffff, #ffffff);
+   background: -moz-linear-gradient(top, #ffffff, #ffffff);
+   background: -ms-linear-gradient(top, #ffffff, #ffffff);
+   background: -o-linear-gradient(top, #ffffff, #ffffff);
+   padding: 3px 09px;
+   -webkit-border-radius: 11px;
+   -moz-border-radius: 11px;
+   border-radius: 11px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: #333133;
+   font-size: 13px;
+   font-family: Georgia, serif;
+   text-decoration: none;
+   vertical-align: middle;
+   }
+.button:hover {
+   border-top-color: #d9d9d9;
+   background: #d9d9d9;
+   color: #595759;
+   }
+.button:active {
+   border-top-color: #e3e3e3;
+   background: #e3e3e3;
+   }
+	
+	
+	
+	
+	
+	
+	
+.style1 {
+	font-size: 14px;
+	color: #FFFFFF;
+}
+.style2 {
+	font-size: 16px
+}
+.style3 {
+	font-size: 35px;
+	color: #FFFFFF;
+}
+.style4 {
+	font-size: 18px;
+	color: #FFFFFF;
+}
+.style5 {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 20px;
+}
+.style6 {
+	font-size: 18px
+}
+
+
+/* Styles for editor and display helpers
+----------------------------------------------------------*/
+.display-label, 
+.editor-label {
+    margin: 1em 0 0 0;
+}
+.display-field, 
+.editor-field {
+    margin: 0.5em 0 0 0;
+}
+.text-box {
+    width: 40em;
+}
+.page_single_column
+{
+    margin-left:10px;
+    margin-top:10px;
+    clear: both;
+    float:left;
+}

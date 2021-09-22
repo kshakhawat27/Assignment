@@ -1,0 +1,332 @@
+﻿@{
+    ViewBag.Title = "User Permission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model  SalesForce.Domain.Admin.AdmUserpermissionEntity
+
+<style type="text/css">
+    .ui-autocomplete {
+        overflow: auto;
+        height: 300px;
+    }
+</style>
+<style type="text/css">
+    tr.spaceUnder > td {
+        padding-bottom: .20em;
+    }
+
+    .cTable {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .cTable td, .cTable th {
+            border: 1px solid #ddd;
+            padding: 6px;
+        }
+
+        .cTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .cTable tr:hover {
+            background-color: #ddd;
+        }
+
+        .cTable th {
+            padding: 8px;
+            text-align: left;
+            background-color: #b3b3b3 !important;
+            color: white;
+        }
+
+    * {
+        -webkit-print-color-adjust: exact !important;
+    }
+</style>
+<div class="uk-grid uk-grid-small" data-uk-grid-margin>
+    <div class="uk-width-medium-1-3">
+        <div class="md-card">
+            <div class="md-card-content">
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-1">
+                        <label class="uk-text-success">
+                            Employee Name
+                        </label>
+                        @Html.DropDownList("UserTId", (List<SelectListItem>)ViewData["UserListSelect"], new { @class = "md-input md-input-success label-fixed" })
+                    </div>
+                </div>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-1">
+                        <label>
+                            User ID
+                        </label>
+                        @Html.TextBoxFor(m => m.Userid, new { @class = "md-input label-fixed formInputs", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-1">
+                        <label>
+                            Employee Code
+                        </label>
+                        @Html.TextBox("EmpId", "", new { @class = "md-input label-fixed formInputs", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-1">
+                        <label>
+                            JoiningDate
+                        </label>
+                        @Html.TextBox("JoiningDate", "", new { @class = "md-input label-fixed formInputs", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-1">
+                        <label>
+                            ContactNo
+                        </label>
+                        @Html.TextBox("ContactNo", "", new { @class = "md-input label-fixed formInputs", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-1">
+                        <label>
+                            Email
+                        </label>
+                        @Html.TextBox("Email", "", new { @class = "md-input label-fixed formInputs", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-1">
+                        <label>
+                            AboutUser
+                        </label>
+                        @Html.TextArea("AboutUser", "", new { @class = "md-input label-fixed formInputs", @readonly = "true" })
+                    </div>
+                </div>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-1">
+                        <a class="md-btn md-btn-warning md-btn-wave-light uk-float-right md-btn-mini" href="javascript:ShowEmpData();">
+                            Show
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="uk-width-medium-2-3">
+        <div class="md-card">
+            <div class="md-card-content">
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-2">
+                        <label class="uk-text-success">
+                            Module Name
+                        </label>
+                        @Html.DropDownListFor(m => m.ModuleName, (List<SelectListItem>)ViewData["ModuleList"], new { @class = "md-input md-input-success label-fixed formInputs" })
+                    </div>
+                    <div class="uk-width-medium-1-2">
+                        <label class="uk-text-success">
+                            Feature Name
+                        </label>
+                        @Html.DropDownListFor(m => m.TabName, (List<SelectListItem>)ViewData["TabIdList"], new { @class = "md-input md-input-success label-fixed formInputs" })
+                    </div>
+                </div>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-1">
+
+
+
+                        <div class="uk-overflow-container">
+                            <table class="uk-table uk-table-striped">
+                                <thead>
+                                    <tr class="md-bg-red-50">
+                                        <th>
+                                            <input type='checkbox' id='readAllChk' class='material-icons' />Read
+                                        </th>
+                                        <th>
+                                            <input type='checkbox' id='fullAllChk' class='material-icons' />Full
+                                        </th>
+                                        <th>
+                                            SL
+                                        </th>
+                                        <th>
+                                            Module Name
+                                        </th>
+                                        <th>
+                                            Tab Name
+                                        </th>
+                                        <th>
+                                            SubFeature
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                        <th>
+                                            Del
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dataTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-grid" data-uk-grid-margin>
+                    <div class="uk-width-medium-1-1">
+                        <a class="md-btn md-btn-primary md-btn-wave-light uk-float-right md-btn-mini" href="javascript:SubmitData();">
+                            Add Permission
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#readAllChk").change(function () {
+        var status = $(this).is(":checked") ? true : false;
+        $(".read").prop("checked", status);
+    });
+
+    $("#fullAllChk").change(function () {
+        var status = $(this).is(":checked") ? true : false;
+        $(".full").prop("checked", status);
+    });
+
+    $("#UserTId").change(function () {
+        ShowEmpData();
+    });
+
+    function ShowEmpData() {
+       
+        var empId = $('#UserTId').val();
+        $(".formInputs").val('');
+        $("#dataTable").html('');
+        if (empId.length > 0) {
+            $.post('/Admin/UserManagement/GetUserListbyID?Id=' + empId, function (data) {
+                $.each(data, function (i, data) {
+                    $('#Userid').val(data.UserId);
+                    $('#JoiningDate').val(data.JoiningDate);
+                    $('#ContactNo').val(data.ContactNo);
+                    $('#Email').val(data.Email);
+                    $('#AboutUser').val(data.AboutUser);
+                    $('#EmpId').val(data.EmpId);
+                });     
+            });
+        }
+        else {
+            UIkit.modal.alert("Employee id is empty");
+        }
+    }
+
+    $('#ModuleName').change(function () {
+        $("#fullAllChk, #readAllChk").prop("checked", false);
+        $("#dataTable").html('');
+        var selectedItem = $(this).val();
+        var items = "<option value=''></option>";
+        if (selectedItem != "" && selectedItem != 0) {
+            $.post('/Admin/UserManagement/TabList?id=' + selectedItem, function (data) {
+                var items = "";
+                var items1 = "";
+                var isSeleted = '';
+                if (data.Selected) {
+                    isSeleted = " selected='selected'";
+                }
+                $.each(data, function (i, data) {
+                    items += "<option value='" + data.Value + isSeleted + "'>" + data.Text + "</option>";
+                });
+                $("#TabName").html(items);
+            });
+        }
+    });
+
+    $('#TabName').change(function () {
+        $("#fullAllChk, #readAllChk").prop("checked", false);
+        var ModuleName = $('#ModuleName').val(),
+            Tabid = $('#TabName').val(),
+            UserId = $('#Userid').val(),
+            dataTable = '',
+            sl = 1;
+        if (UserId.length > 0) {
+            $.post('/Admin/UserManagement/PermissionDetails?ModuleName=' + ModuleName + '&Tabid=' + Tabid + '&UserId=' + UserId, function (data) {
+//                    console.log(data.Records);
+                $.each(data.Records, function (i, data) {
+                    var readAcc = (data.Accesslevel == "Read") ? "checked" : "",
+                        fullAcc = (data.Accesslevel == "Full") ? "checked" : "",
+                        status = (data.status == "Not Permitted") ? "None" : data.status;
+                    dataTable = dataTable + "<tr><td><input class='read material-icons' type='checkbox' id='read" + sl + "' " + readAcc + "></td>"
+                        + "<td><input class='full material-icons' type='checkbox' id='full" + sl + "' " + fullAcc + " /></td>"
+                        + "<td>" + sl + "<input type='hidden' id='pID" + sl + "' value='" + data.Id + "' /></td>"
+                        + "<td>" + data.ModuleName + "</td>"
+                        + "<td>" + data.TabName + "</td>"
+                        + "<td>" + data.SubFeature + "</td>"
+                        + "<td>" + status + "</td>"
+                        + "<td><i class='material-icons' onClick='DeleteData(" + sl + ");' title='Delete' style='cursor:pointer;'>&#xE14C;</i></td>"
+                        + "</tr>";
+                    sl = sl + 1;
+                });
+                $("#dataTable").html(dataTable);
+            });
+        }
+    });
+
+    function SubmitData() {
+        UIkit.modal.confirm('Are you sure to Submit this?', function () {
+            var list = new Array(),
+                i = 0,
+                userId = $("#Userid").val();
+
+            $('#dataTable tr').each(function () {
+                var cID = $(this).find("td:eq(0) input").attr("id").match(/\d+/),
+                    pId = $("#pID" + cID).val(),
+                    access = "";
+
+                if ($("#read" + cID).is(":checked")) access = "2";
+                if ($("#full" + cID).is(":checked")) access = "1";
+
+                if (access != "") {
+                    list[i] = pId;
+                    list[i + 1] = access;
+                    i = i + 2;
+                }
+            });
+
+            if (userId.length == 0) UIkit.modal.alert("Empty Employee Id");
+            else if (list.length == 0) UIkit.modal.alert("Please Select An Item");
+            else {
+                $.post('/Admin/UserManagement/SubmitPermission?data=' + list + '&userId=' + userId, function (data) {
+                    if (data.Success) {
+                        UIkit.modal.alert("Your requsition submited successfully.. Thanks");
+                    }
+                    else {
+                        UIkit.modal.alert(data.Message);
+                    }
+                });
+            }
+        });
+    }
+
+
+    function DeleteData(cID) {
+        UIkit.modal.confirm('Are you sure to Delete this?', function () {
+            var userId = $("#Userid").val(),
+                pId = $("#pID" + cID).val();
+            if (userId.length == 0) UIkit.modal.alert("Empty Employee Id");
+            else {
+                $.post('/Admin/UserManagement/DeletePermissionSingle?data=' + pId + '&userId=' + userId, function (data) {
+                    if (data.Success) {
+                        $('#full' + cID).prop("checked", false);
+                        $('#read' + cID).prop("checked", false);
+                        UIkit.modal.alert("permission Successfully deleted");
+                    }
+                    else {
+                        UIkit.modal.alert(data.Message);
+                    }
+                });
+            }
+        });
+    }
+</script>
+

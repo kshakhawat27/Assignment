@@ -1,0 +1,289 @@
+﻿@{
+    ViewBag.Title = "HSCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model SalesForce.Domain.Model.Inventory.VatHscodeEntity
+
+<form id="InputForm" action="">
+
+    <div class="md-card md-card-content md-card-primary">
+        <div class="uk-grid" data-uk-grid-margin>
+            <div class="uk-width-medium-1-6">
+                <label>
+                    Vat Category
+                </label>
+                @Html.DropDownList("SrcVatCategory", (List<SelectListItem>)ViewData["SrcVATCategoryList"], new { @class = "md-input md-input-success label-fixed" })
+            </div>
+            <div class="uk-width-medium-1-6">
+                <a class="md-btn md-btn-mini md-btn-success" href="javascript:GetSearchResult();"
+                   style="margin-top: 20px">Search</a> <i class="uk-icon-spinner uk-icon-medium uk-icon-spin uk-text-warning loading" style="display:none;"></i>
+            </div>
+        </div>
+    </div>
+    <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-1 uk-container-center" id="tb_Container">
+        </div>
+    </div>
+
+    <div class="md-fab-wrapper">
+        <span class="md-fab md-fab-accent" id="note_add" onclick="OpenPopupModel(0);"><i class="material-icons">add</i> </span>
+    </div>
+    <div class="uk-modal" id="myModal">
+        <div class="uk-modal-dialog uk-modal-body uk-modal-dialog-large" id="myModalBody">
+            <button class="uk-modal-close uk-close" type="button"></button>
+            @Html.HiddenFor(m => m.Id)
+            <div class="uk-modal-header">
+                <h3 class="uk-modal-title" id="modalTitle"></h3>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <label>Code Type<span class="uk-text-danger"> *</span></label>
+                    @Html.DropDownListFor(m => m.Codetype, (List<SelectListItem>)ViewData["CodeTypeList"], new { @class = "md-input md-input-success label-fixed" })
+                </div>
+                <div class="uk-width-1-2">
+                    <label>
+                        Code
+                    </label>
+                    @Html.TextBoxFor(m => m.Code, new { @class = "md-input label-fixed", @type = "text" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Description<span class="uk-text-danger"> *</span></label>
+                    @Html.TextAreaFor(m => m.Description, new { @class = "md-input label-fixed", @rows = "2" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <label>Country<span class="uk-text-danger"> *</span></label>
+                    @Html.DropDownListFor(m => m.Countryid, (List<SelectListItem>)ViewData["CountryList"], new { @class = "md-input md-input-success label-fixed" })
+                </div>
+                <div class="uk-width-1-2">
+                    <label>
+                        CD(% or Amnt)
+                    </label>
+                    @Html.TextBoxFor(m => m.Cd, new { @class = "md-input label-fixed", @type = "number" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <label>SD(% or Amnt)<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Sd, new { @class = "md-input label-fixed", @type = "number" })
+                </div>
+                <div class="uk-width-1-2">
+                    <label>
+                        VAT Category
+                    </label>
+                    @Html.DropDownListFor(m => m.Vatcategoryid, (List<SelectListItem>)ViewData["VATCategoryList"], new { @class = "md-input md-input-success label-fixed" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <label>VAT(% or Amnt)<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Vatamnt, new { @class = "md-input label-fixed", @type = "number" })
+                </div>
+                <div class="uk-width-1-2">
+                    <label>
+                        Value Added %
+                    </label>
+                    @Html.TextBoxFor(m => m.Valueaddedper, new { @class = "md-input label-fixed", @type = "number" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <label>AIT %<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Aitper, new { @class = "md-input label-fixed", @type = "number" })
+                </div>
+                <div class="uk-width-1-2">
+                    <label>
+                        RD %
+                    </label>
+                    @Html.TextBoxFor(m => m.Rdper, new { @class = "md-input label-fixed", @type = "number" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <label>AT %<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Atper, new { @class = "md-input label-fixed", @type = "number" })
+                </div>
+                <div class="uk-width-1-2">
+                    <label>
+                        Specific CD Slab
+                    </label>
+                    @Html.TextBoxFor(m => m.Specificcd, new { @class = "md-input label-fixed", @type = "number" })
+                </div>
+            </div>
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-2">
+                    <label>Specific VAT Slab<span class="uk-text-danger"> *</span></label>
+                    @Html.TextBoxFor(m => m.Specificvat, new { @class = "md-input label-fixed", @type = "number" })
+                </div>
+                <div class="uk-width-1-2">
+                    <label>
+                        Specific SD Slab
+                    </label>
+                    @Html.TextBoxFor(m => m.Specificsd, new { @class = "md-input label-fixed", @type = "number" })
+                </div>
+            </div>
+
+            <div class="uk-grid" data-uk-grid-margin>
+                <div class="uk-width-1-1">
+                    <label>Remarks(if any)<span class="uk-text-danger"> *</span></label>
+                    @Html.TextAreaFor(m => m.Remarks, new { @class = "md-input label-fixed", @rows = "2" })
+                </div>
+            </div>
+
+            <div class="uk-modal-footer uk-text-right">
+                <button type="button" class="md-btn md-btn-mini md-btn-success" id="submitBtn" onclick="SubmitData();">Create</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!--  forms advanced functions -->
+<script type="text/javascript" src="@Url.Content(" ~/Altair/assets/js/pages/forms_advanced.min.js")"></script>
+<!-- datatables -->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+<!-- datatables buttons-->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/dataTables.buttons.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/buttons.uikit.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/jszip/dist/jszip.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/pdfmake.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/vfs_fonts.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.colVis.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.html5.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.print.js")"></script>
+<!-- datatables custom integration -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/datatables.uikit.js")"></script>
+<!--  datatables functions -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/pages/plugins_datatables.js")"></script>
+
+<script type="text/javascript">
+
+    function OpenPopupModel(elem) {
+        if (elem === 0) {
+            $("#Codetype").val("");
+            $("#Code").val("");
+            $("#Countryid").val("");
+            $("#Description").val("");
+            $("#Remarks").val("");
+            $("#Cd").val("0");
+            $("#Sd").val("0");
+            $("#Vatamnt").val("0");
+            $("#Valueaddedper").val("0");
+            $("#Aitper").val("0");
+            $("#Rdper").val("0");
+            $("#Atper").val("0");
+            $("#Specificcd").val("0");
+            $("#Specificvat").val("0");
+            $("#Specificsd").val("0");
+            $("#Vatcategoryid").val("");
+
+            $("#Id").val("0");
+            $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-success").text("Create");
+            $("#modalTitle").text("Insert HS Code");
+        }
+        else {
+            $.post("/Admin/Settings/GetSingleHSCodeById?Id=" + elem, function (data) {
+                $("#Codetype").val(data.Codetype);
+                $("#Code").val(data.Code);
+                $("#Description").val(data.Description);
+                $("#Countryid").val(data.Countryid.toLowerCase());
+                $("#Cd").val(data.Cd);
+                $("#Sd").val(data.Sd);
+                $("#Vatcategoryid").val(data.Vatcategoryid.toLowerCase());
+                $("#Vatamnt").val(data.Vatamnt);
+                $("#Valueaddedper").val(data.Valueaddedper);
+                $("#Aitper").val(data.Aitper);
+                $("#Rdper").val(data.Rdper);
+                $("#Atper").val(data.Atper);
+                $("#Specificcd").val(data.Specificcd);
+                $("#Specificvat").val(data.Specificvat);
+                $("#Specificsd").val(data.Specificsd);
+                $("#SpecificsdRemarks").val(data.Remarks);
+                //$("#Isactive").val(data.Isactive);
+                $("#Id").val(data.Id);
+
+                $("#submitBtn").removeClass("md-btn-success md-btn-danger").addClass("md-btn-danger").text("Update");
+                $("#modalTitle").text("Update HS Code");
+            });
+        }
+        UIkit.modal("#myModal", { bgclose: false, keyboard: false }).show();
+    }
+
+    GetSearchResult();
+    function GetSearchResult() {
+        $(".loading").show();
+        $.post("/Admin/Settings/GetHSCodeList?Category=" + $("#SrcVatCategory").val(), function (data) {
+            //console.log(data.jsonData.Data);
+            GenerateDataGrid(data.jsonData.Data);
+            //$("#tb_Container").html(data.TableData);
+            altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 320);
+            $(".loading").hide();
+        });
+    }
+
+    function GenerateDataGrid(data) {
+        data = JSON.parse(data);
+
+        //console.log(data);
+
+        var TableData = "", Edit = "", Delete = "", Status = "";
+
+        $.each(data, function (key, value) {
+            //console.log(key + ": " + value.Code);
+
+            Edit = "<i onclick=\"OpenPopupModel('" + value.ID + "');\" title='Edit This' class='md-icon md-24 material-icons md-color-orange-400'>&#xE254;</i>";
+            //Status = dr["IsActive"].ToString() == "Active" ? "<span class='uk-badge uk-badge-success'>" + dr["IsActive"] + "</span>" : "<span class='uk-badge uk-badge-danger'>" + dr["IsActive"] + "</span>";
+
+            TableData = TableData + "<tr>"
+                + "<td>" + Edit + " " + Delete + "</td>"
+                + "<td>" + (key + 1) + "</td>"
+                + "<td>" + value.CodeType + "</td>"
+                + "<td>" + value.Code + "</td>"
+                + "<td>" + value.Description + "</td>"
+                + "<td>" + value.CountryName + "</td>"
+                + "<td>" + value.CD + "</td>"
+                + "<td>" + value.SD + "</td>"
+                + "<td>" + value.Category + "</td>"
+                + "<td>" + value.VATAmnt + "</td>"
+                + "<td>" + value.ValueAddedPer + "</td>"
+                + "<td>" + value.AITPer + "</td>"
+                + "<td>" + value.RDPer + "</td>"
+                + "<td>" + value.ATPer + "</td>"
+                + "<td>" + value.Remarks + "</td>"
+                + "</tr>";
+        });
+        var tHead = "<tr><th style='width:15px;'></th><th style='width:15px;'>SL</th><th>Code Type</th><th>Code</th><th>Description</th><th>Country</th><th>CD (% or Amt)</th><th>SD (% or Amt)</th><th>VAT Category</th><th>VAT (% or Amt)</th><th>Value Added %</th><th>AIT%</th><th>RD%</th><th>AT%</th><th>Remarks</th></tr>";
+        TableData = "<div class='rk_dtButton2'></div><table id='rk_dtInfo2' class='uk-table uk-table-hover uk-table-condensed' cellspacing='0' width='100%'>" + "<thead class='md-bg-blue-grey-100'>" + tHead + "</thead><tfoot style='display:none;'>" + tHead + "</tfoot><tbody>" + TableData + "</tbody></table>";
+
+        $("#tb_Container").html(TableData);
+
+    }
+
+    function SubmitData() {
+        var errorMsg = '';
+        UIkit.modal.confirm('Are you sure to Submit this?', function () {
+            if (!$("#Codetype").val()) {
+                errorMsg = "Sorry, Please Check Required Fields.";
+                UIkit.modal.alert(errorMsg);
+            }
+            else if (!$("#Code").val()) {
+                errorMsg = "Sorry, Please Check Required Fields.";
+                UIkit.modal.alert(errorMsg);
+            }
+            else {
+                $.post("/Admin/Settings/AddUpdateHSCodeInfo", $("#InputForm").serialize(), function (data) {
+                    if (data.Success) {
+                        UIkit.modal.alert(data.Msg);
+                        UIkit.modal("#myModal").hide();
+                        GetSearchResult();
+                    }
+                    else {
+                        UIkit.modal.alert(data.Msg);
+                    }
+                });
+            }
+        });
+    }
+</script>

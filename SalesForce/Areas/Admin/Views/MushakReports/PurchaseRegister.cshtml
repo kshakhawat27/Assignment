@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "Purchase Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model SalesForce.Domain.Inventory.InvStockmasterEntity
+<form id="InputForm" action="">
+    <div class="md-card md-card-content md-card-primary">
+        <div class="uk-grid" data-uk-grid-margin>
+            <div class="uk-width-medium-1-6">
+                <label>
+                    Start Date
+                </label>
+                @Html.TextBoxFor(m => m.ReceivedateSearch, new { @class = "md-input label-fixed", @readonly = "readonly", @data_uk_datepicker = "{format:'DD/MM/YYYY'}" })
+            </div>
+            <div class="uk-width-medium-1-6">
+                <label>
+                    End Date
+                </label>
+                @Html.TextBoxFor(m => m.EndDate, new { @class = "md-input label-fixed", @readonly = "readonly", @data_uk_datepicker = "{format:'DD/MM/YYYY'}" })
+            </div>
+            <div class="uk-width-medium-1-4">
+                <label>
+                    LOB
+                </label>
+                @Html.DropDownListFor(m => m.LobId, (List<SelectListItem>)ViewData["LOBList"], new { @class = "md-input label-fixed" })
+            </div>
+            <div class="uk-width-medium-1-3">
+                <label>
+                    Product Name
+                </label>
+                @Html.DropDownListFor(m => m.Productid, (List<SelectListItem>)ViewData["ItemsList"], new { @class = "md-input label-fixed" })
+            </div>
+            <div class="uk-width-medium-1-6">
+                <a class="md-btn md-btn-mini md-btn-success" href="javascript:GetSearchResults();"
+                   style="margin-top: 20px">Search</a> <i class="uk-icon-spinner uk-icon-medium uk-icon-spin uk-text-warning loading" style="display:none;"></i>
+            </div>
+        </div>
+
+    </div>
+    <div class="uk-grid" data-uk-grid-margin>
+        <div class="uk-width-medium-1-1 uk-container-center" id="tb_Container">
+        </div>
+    </div>
+    <a class="md-btn md-btn-mini md-btn-primary" style="margin-top:20px;display:none;" id="btnPrint" href="javascript:PrintData();">PRINT</a>
+</form>
+
+<style type="text/css">
+    .material-icons {
+        cursor: pointer;
+    }
+</style>
+
+<!--  forms advanced functions -->
+<script type="text/javascript" src="@Url.Content(" ~/Altair/assets/js/pages/forms_advanced.min.js")"></script>
+<!-- datatables -->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables/media/js/jquery.dataTables.min.js")"></script>
+<!-- datatables buttons-->
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/dataTables.buttons.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/buttons.uikit.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/jszip/dist/jszip.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/pdfmake.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/pdfmake/build/vfs_fonts.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.colVis.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.html5.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Altair/bower_components/datatables-buttons/js/buttons.print.js")"></script>
+<!-- datatables custom integration -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/custom/datatables/datatables.uikit.js")"></script>
+<!--  datatables functions -->
+<script type="text/javascript" src="@Url.Content("~/Altair/assets/js/pages/plugins_datatables.js")"></script>
+
+
+<script type="text/javascript">
+    GetSearchResults();
+    function GetSearchResults() {
+        $(".loading").show();
+        $.post("/Admin/MushakReports/GetPurchaseRegisterDataList?StartDate=" + $("#ReceivedateSearch").val() + "&EndDate=" + $("#EndDate").val() + "&Item=" + $("#Productid").val(), function (data) {
+            $("#tb_Container").html(data);
+            altair_datatables.dt_rkCustom("#rk_dtInfo2", ".rk_dtButton2", 320);
+            $(".loading").hide();
+            $("#btnPrint").show();
+        });
+    }
+
+    $('#LobId').change(function () {
+        //loadModels();
+        GetProductList();
+    });
+
+    function GetProductList() {
+        $.post("/Inventory/Product/JGetItemslist?LOB=" + $('#LobId').val(), function (data) {
+            var items = "";
+            var isSeleted = '';
+            if (data.Selected) {
+                isSeleted = " selected='selected'";
+            }
+            $.each(data, function (i, data) {
+                items += "<option value='" + data.Value + isSeleted + "'>" + data.Text + "</option>";
+            });
+            $("#Productid").html(items);
+            $("#Productid").removeAttr('disabled');
+        });
+    }
+
+    function PrintData() {
+        var errorMsg = '';
+        if ($("#Productid").val() == "" || $("#Productid").val() == null) {
+            errorMsg = "Sorry, Please  Select an Item To Print!!!!";
+            UIkit.modal.alert(errorMsg);
+        } else {
+            window.open("/Admin/MushakReports/PurchaseRegister6_1?StartDate=" + $("#ReceivedateSearch").val() + "&EndDate=" + $("#EndDate").val() + "&Item=" + $("#Productid").val(), '_blank');
+        }
+    }
+</script>
+
+
+

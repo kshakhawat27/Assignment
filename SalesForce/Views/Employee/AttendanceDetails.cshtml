@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "AttendanceDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AttendanceDetails</h2>
+
+<script src="~/Content/jQuery/jQuery-2.1.4.min.js"></script>
+<section class="content">
+    <div class="box">
+        <div class="box-body">
+            <div id="tblCG01">
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<script>
+
+    $(function () {
+        ClearForm();
+        $(document).delegate('#btnSave', 'click', function (e) {
+            e.preventDefault();
+            SaveFormValue();
+        });
+        $(document).delegate('#btnAddNew', 'click', function (e) {
+            e.preventDefault();
+            ClearForm();
+            $("#modalCG01").modal("toggle");
+        });
+        $(document).delegate('#btnClear', 'click', function (e) {
+            e.preventDefault();
+            ClearForm();
+        });
+        LoadGridData();
+
+        LoadCG01DDLMasterData();
+    });
+
+
+    function LoadGridData() {
+        $.ajax({
+            type: "GET",
+            url: "/Employee/LoadAllAttendance",
+            data: {},
+            contentType: "application/json",
+            datatype: "json",
+            success: function (data) {
+                BindGridData(data);
+            }
+        });
+    }
+    function BindGridData(data) {
+        //$("#tblCG01").kendoGrid().empty();
+        $("#tblCG01").kendoGrid({
+            dataSource: {
+                data: data,
+                dataType: "json",
+            },
+            toolbar:
+               "<a  role='button' style='float:right;' class='k-button k-button-icontext k-grid-add' href='javascript:void(0)' onclick='LoadPdf()'><span class='k-icon k-i-plus'></span>All Employee Attendance Details PDF</a>",
+            columns: [
+                { field: "Employeeid", title: "Employee Id", filterable: true },
+                { field: "Startdatetime", title: "In Time", filterable: false },
+                { field: "Enddatetime", title: "Out Time", filterable: false },
+                { field: "Createddate", title: "Date", filterable: true },
+                //{
+                //    template: '<a role="button" class="k-button k-button-icontext k-grid-edit" href="javascript:void(0)" onclick=LoadEditData(#=InfoID#)><span class="k-icon k-i-edit"></span>Edit</a>' +
+                //        '<a role="button" class="k-button k-button-icontext k-grid-delete" href="javascript:void(0)" onclick=DeleteGridData(#=InfoID#)><span class="k-icon k-i-close"></span>Delete</a>',
+                //    field: "InfoID",
+                //    title: "Action",
+                //    width: 170,
+                //    headerAttributes: { style: "text-align: center" },
+                //    attributes: { class: "text-center" },
+                //    filterable: false
+                //},
+            ],
+            sortable: true,
+            filterable: {
+                extra: false, //do not show extra filters
+                operators: { // redefine the string operators
+                    string: {
+                        contains: "Contains",
+                        startswith: "Starts With",
+                        eq: "Is Equal To"
+                    }
+                }
+            },
+            resizable: true,
+            //height: 150,
+            pageable: false,
+            scrollable: true,
+            //detailTemplate: kendo.template($("#template").html()),
+            //detailInit: detailInit
+        });
+    }
+
+    function LoadPdf() {
+        window.location.href = "/Employee/AttendanceInfo?reportTypes=pdf";
+    }
+    function LoadExcel() {
+        window.location.href = "/Report/Info?reportTypes=EXCELOPENXML";
+    }
+
+    function ClearForm() {
+        $("#hdValue").val("");
+        $(".txt").val("");
+    }
+
+</script>
+
+
